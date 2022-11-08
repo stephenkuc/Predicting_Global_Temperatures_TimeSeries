@@ -1,0 +1,88 @@
+---
+title: "ADS 506 Final"
+author: "Lane Whitmore"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+library(forecast)
+library(lubridate)
+library(zoo)
+```
+
+
+
+```{r}
+land.temps <- read.csv('GlobalLandTemperaturesByCountry.csv')
+head(land.temps)
+land.temps$dt <- as.Date(land.temps$dt)
+land.temps
+```
+```{r}
+NA.temps <- land.temps[land.temps$Country == 'North America',]
+
+SA.temps <- land.temps[land.temps$Country == 'South America',]
+
+AF.temps <- land.temps[land.temps$Country == 'Africa',]
+
+EU.temps <- land.temps[land.temps$Country == 'Europe',]
+
+AS.temps <- land.temps[land.temps$Country == 'Asia',]
+
+AU.temps <- land.temps[land.temps$Country == 'Australia',]
+```
+
+
+
+
+```{r}
+NA.ts <- ts(NA.temps$AverageTemperature, start = c(1900), end = c(2010), frequency = 12) 
+SA.ts <- ts(SA.temps$AverageTemperature, start = c(1900), end = c(2010), frequency = 12) 
+AF.ts <- ts(AF.temps$AverageTemperature, start = c(1900), end = c(2010), frequency = 12) 
+EU.ts <- ts(EU.temps$AverageTemperature, start = c(1900), end = c(2010), frequency = 12) 
+AS.ts <- ts(AS.temps$AverageTemperature, start = c(1900), end = c(2010), frequency = 12) 
+AU.ts <- ts(AU.temps$AverageTemperature, start = c(1900), end = c(2010), frequency = 12) 
+```
+
+
+```{r}
+plot.ts(NA.ts, xlab = 'Time', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
+```
+
+
+```{r}
+plot.ts(SA.ts, xlab = 'Time', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
+```
+
+
+```{r}
+
+#uniq.lm <- tslm(uniq.ts ~ trend + I(trend^2))
+plot.ts(AF.ts, xlab = 'Year', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
+#lines(uniq.lm$fitted, lwd = 2)
+
+
+```
+
+```{r}
+plot.ts(EU.ts, xlab = 'Time', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
+```
+
+
+
+```{r}
+plot.ts(AS.ts, xlab = 'Time', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
+```
+
+```{r}
+plot.ts(AU.ts, xlab = 'Time', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
+```
+
+
