@@ -102,9 +102,14 @@ summary(EU.ts)
 ```{r}
 plot.ts(AS.ts, xlab = 'Time', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
 ```
+```{r}
+summary(AS.ts)
+```
 
 ```{r}
 plot.ts(AU.ts, xlab = 'Time', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
 ```
-
+```{r}
+summary(AU.ts)
+```
 
