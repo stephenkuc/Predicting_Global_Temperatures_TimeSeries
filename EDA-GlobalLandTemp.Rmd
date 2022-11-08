@@ -22,9 +22,27 @@ library(zoo)
 ```{r}
 land.temps <- read.csv('GlobalLandTemperaturesByCountry.csv')
 head(land.temps)
+
+# converting date into date format
 land.temps$dt <- as.Date(land.temps$dt)
 land.temps
 ```
+```{r}
+# let's see what countries we have?
+# not going to print all out
+
+head(unique(land.temps$Country), 10)
+
+```
+
+```{r}
+# check structure of dataframe
+
+str(land.temps)
+
+```
+
+
 ```{r}
 NA.temps <- land.temps[land.temps$Country == 'North America',]
 
@@ -55,7 +73,9 @@ AU.ts <- ts(AU.temps$AverageTemperature, start = c(1900), end = c(2010), frequen
 ```{r}
 plot.ts(NA.ts, xlab = 'Time', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
 ```
-
+```{r}
+summary(NA.ts)
+```
 
 ```{r}
 plot.ts(SA.ts, xlab = 'Time', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
@@ -74,7 +94,9 @@ plot.ts(AF.ts, xlab = 'Year', ylab = 'Average Temperature', bty = 'l', ylim = c(
 ```{r}
 plot.ts(EU.ts, xlab = 'Time', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
 ```
-
+```{r}
+summary(EU.ts)
+```
 
 
 ```{r}
