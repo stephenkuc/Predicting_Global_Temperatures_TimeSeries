@@ -29,29 +29,47 @@ land.temps
 NA.temps <- as.data.frame(land.temps[land.temps$Country == 'North America',])
 rownames(NA.temps) <- 1:nrow(NA.temps)
 na.temps <- NA.temps[1577:2940,]
+rownames(na.temps) <- 1:nrow(na.temps)
+train.na.temps <- na.temps[1:1352,]
+val.na.temps <- na.temps[1353:1364,]
 
 SA.temps <- land.temps[land.temps$Country == 'South America',]
 rownames(SA.temps) <- 1:nrow(SA.temps)
 sa.temps <- SA.temps[589:1952,]
+rownames(sa.temps) <- 1:nrow(sa.temps)
+train.sa.temps <- sa.temps[1:1352,]
+val.sa.temps <- sa.temps[1353:1364,]
 
 AF.temps <- land.temps[land.temps$Country == 'Africa',]
 rownames(AF.temps) <- 1:nrow(AF.temps)
 af.temps <- AF.temps[601:1964,]
+rownames(af.temps) <- 1:nrow(af.temps)
+train.af.temps <- af.temps[1:1352,]
+val.af.temps <- af.temps[1353:1364,]
 
 
 EU.temps <- land.temps[land.temps$Country == 'Europe',]
 rownames(EU.temps) <- 1:nrow(EU.temps)
 eu.temps <- EU.temps[1875:3238,]
+rownames(eu.temps) <- 1:nrow(eu.temps)
+train.eu.temps <- eu.temps[1:1352,]
+val.eu.temps <- eu.temps[1353:1364,]
 
 
 AS.temps <- land.temps[land.temps$Country == 'Asia',]
 rownames(AS.temps) <- 1:nrow(AS.temps)
 as.temps <- AS.temps[1006:2369,]
+rownames(as.temps) <- 1:nrow(as.temps)
+train.as.temps <- as.temps[1:1352,]
+val.as.temps <- as.temps[1353:1364,]
 
 
 AU.temps <- land.temps[land.temps$Country == 'Australia',]
 rownames(AU.temps) <- 1:nrow(AU.temps)
 au.temps <- AU.temps[571:1934,]
+rownames(au.temps) <- 1:nrow(au.temps)
+train.au.temps <- au.temps[1:1352,]
+val.au.temps <- au.temps[1353:1364,]
 
 
 ```
@@ -60,46 +78,113 @@ au.temps <- AU.temps[571:1934,]
 
 
 ```{r}
-NA.ts <- ts(na.temps$AverageTemperature, frequency = 12) 
-SA.ts <- ts(sa.temps$AverageTemperature, frequency = 12) 
-AF.ts <- ts(af.temps$AverageTemperature, frequency = 12) 
-EU.ts <- ts(eu.temps$AverageTemperature, frequency = 12) 
-AS.ts <- ts(as.temps$AverageTemperature, frequency = 12) 
-AU.ts <- ts(au.temps$AverageTemperature, frequency = 12) 
+na.train.ts <- ts(train.na.temps$AverageTemperature, start = c(1900,1), frequency = 12)
+na.val.ts <- ts(val.na.temps$AverageTemperature, start = c(2012,9), frequency = 12)
+
+
+sa.train.ts <- ts(train.sa.temps$AverageTemperature, start = c(1900,1), frequency = 12)
+sa.val.ts <- ts(val.sa.temps$AverageTemperature, start = c(2012,9), frequency = 12)
+
+
+af.train.ts <- ts(train.af.temps$AverageTemperature, start = c(1900,1), frequency = 12) 
+af.val.ts <- ts(val.af.temps$AverageTemperature, start = c(2012,9), frequency = 12)
+
+
+eu.train.ts <- ts(train.eu.temps$AverageTemperature, start = c(1900,1), frequency = 12) 
+eu.val.ts <- ts(val.eu.temps$AverageTemperature, start = c(2012,9), frequency = 12)
+
+
+as.train.ts <- ts(train.as.temps$AverageTemperature, start = c(1900,1), frequency = 12) 
+as.val.ts <- ts(val.as.temps$AverageTemperature, start = c(2012,9), frequency = 12)
+
+
+
+au.train.ts <- ts(train.au.temps$AverageTemperature, start = c(1900,1), frequency = 12) 
+au.val.ts <- ts(val.au.temps$AverageTemperature, start = c(2012,9), frequency = 12)
+
+
 ```
 
 
 ```{r}
-plot.ts(NA.ts, xlab = 'Time', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
+autoplot(na.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
+  labs(title = "NA Surface Temperature Time Series") +
+  scale_y_continuous(limits = c(-20,40), breaks = c(seq(-20,40,10))) +
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
 
 ```{r}
-plot.ts(SA.ts, xlab = 'Time', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
+autoplot(sa.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
+  labs(title = "SA Surface Temperature Time Series") +
+  scale_y_continuous(limits = c(-20,40), breaks = c(seq(-20,40,10))) +
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
 
 ```{r}
 
 
-plot.ts(AF.ts, xlab = 'Year', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
+autoplot(af.train.ts, xlab = 'Year', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))+
+  labs(title = "AF Surface Temperature Time Series") +
+  scale_y_continuous(limits = c(-20,40), breaks = c(seq(-20,40,10))) +
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 
 
 
 ```
 
 ```{r}
-plot.ts(EU.ts, xlab = 'Time', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
+autoplot(eu.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
+  labs(title = "EU Surface Temperature Time Series") +
+  scale_y_continuous(limits = c(-20,40), breaks = c(seq(-20,40,10))) +
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
 
 
 ```{r}
-plot.ts(AS.ts, xlab = 'Time', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
+autoplot(as.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
+  labs(title = "AS Surface Temperature Time Series") +
+  scale_y_continuous(limits = c(-20,40), breaks = c(seq(-20,40,10))) +
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
 ```{r}
-plot.ts(AU.ts, xlab = 'Time', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
+autoplot(au.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
+  labs(title = "AU Surface Temperature Time Series") +
+  scale_y_continuous(limits = c(-20,40), breaks = c(seq(-20,40,10))) +
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
 
