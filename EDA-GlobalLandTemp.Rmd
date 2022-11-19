@@ -130,6 +130,17 @@ autoplot(sa.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
+```{r}
+autoplot(diff(sa.train.ts))
+acf(diff(sa.train.ts), main = '')
+acf(sa.train.ts, main = '')
+
+sa.stl <- stl(sa.train.ts, s.window = 'periodic')
+plot(sa.stl)
+```
+
+
+
 
 
 ```{r}
@@ -148,6 +159,18 @@ autoplot(af.train.ts, xlab = 'Year', ylab = 'Average Temperature', bty = 'l', yl
 
 
 ```
+
+```{r}
+autoplot(diff(af.train.ts))
+acf(diff(af.train.ts), main = '')
+acf(af.train.ts, main = '')
+af.stl <- stl(af.train.ts, s.window = 'periodic')
+plot(af.stl)
+```
+
+
+
+
 
 ```{r}
 autoplot(eu.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
