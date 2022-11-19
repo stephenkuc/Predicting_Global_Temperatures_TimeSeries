@@ -22,60 +22,57 @@ library(zoo)
 ```{r}
 land.temps <- read.csv('GlobalLandTemperaturesByCountry.csv')
 head(land.temps)
-
-# converting date into date format
 land.temps$dt <- as.Date(land.temps$dt)
 land.temps
 ```
 ```{r}
-# let's see what countries we have?
-# not going to print all out
-
-head(unique(land.temps$Country), 10)
-
-```
-
-```{r}
-# check structure of dataframe
-
-str(land.temps)
-
-```
-
-
-```{r}
-NA.temps <- land.temps[land.temps$Country == 'North America',]
+NA.temps <- as.data.frame(land.temps[land.temps$Country == 'North America',])
+rownames(NA.temps) <- 1:nrow(NA.temps)
+na.temps <- NA.temps[1577:2940,]
 
 SA.temps <- land.temps[land.temps$Country == 'South America',]
+rownames(SA.temps) <- 1:nrow(SA.temps)
+sa.temps <- SA.temps[589:1952,]
 
 AF.temps <- land.temps[land.temps$Country == 'Africa',]
+rownames(AF.temps) <- 1:nrow(AF.temps)
+af.temps <- AF.temps[601:1964,]
+
 
 EU.temps <- land.temps[land.temps$Country == 'Europe',]
+rownames(EU.temps) <- 1:nrow(EU.temps)
+eu.temps <- EU.temps[1875:3238,]
+
 
 AS.temps <- land.temps[land.temps$Country == 'Asia',]
+rownames(AS.temps) <- 1:nrow(AS.temps)
+as.temps <- AS.temps[1006:2369,]
+
 
 AU.temps <- land.temps[land.temps$Country == 'Australia',]
+rownames(AU.temps) <- 1:nrow(AU.temps)
+au.temps <- AU.temps[571:1934,]
+
+
 ```
 
 
 
 
 ```{r}
-NA.ts <- ts(NA.temps$AverageTemperature, start = c(1900), end = c(2010), frequency = 12) 
-SA.ts <- ts(SA.temps$AverageTemperature, start = c(1900), end = c(2010), frequency = 12) 
-AF.ts <- ts(AF.temps$AverageTemperature, start = c(1900), end = c(2010), frequency = 12) 
-EU.ts <- ts(EU.temps$AverageTemperature, start = c(1900), end = c(2010), frequency = 12) 
-AS.ts <- ts(AS.temps$AverageTemperature, start = c(1900), end = c(2010), frequency = 12) 
-AU.ts <- ts(AU.temps$AverageTemperature, start = c(1900), end = c(2010), frequency = 12) 
+NA.ts <- ts(na.temps$AverageTemperature, frequency = 12) 
+SA.ts <- ts(sa.temps$AverageTemperature, frequency = 12) 
+AF.ts <- ts(af.temps$AverageTemperature, frequency = 12) 
+EU.ts <- ts(eu.temps$AverageTemperature, frequency = 12) 
+AS.ts <- ts(as.temps$AverageTemperature, frequency = 12) 
+AU.ts <- ts(au.temps$AverageTemperature, frequency = 12) 
 ```
 
 
 ```{r}
 plot.ts(NA.ts, xlab = 'Time', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
 ```
-```{r}
-summary(NA.ts)
-```
+
 
 ```{r}
 plot.ts(SA.ts, xlab = 'Time', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
@@ -84,9 +81,9 @@ plot.ts(SA.ts, xlab = 'Time', ylab = 'Average Temperature', bty = 'l', ylim = c(
 
 ```{r}
 
-#uniq.lm <- tslm(uniq.ts ~ trend + I(trend^2))
+
 plot.ts(AF.ts, xlab = 'Year', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
-#lines(uniq.lm$fitted, lwd = 2)
+
 
 
 ```
@@ -94,22 +91,15 @@ plot.ts(AF.ts, xlab = 'Year', ylab = 'Average Temperature', bty = 'l', ylim = c(
 ```{r}
 plot.ts(EU.ts, xlab = 'Time', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
 ```
-```{r}
-summary(EU.ts)
-```
+
 
 
 ```{r}
 plot.ts(AS.ts, xlab = 'Time', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
 ```
-```{r}
-summary(AS.ts)
-```
 
 ```{r}
 plot.ts(AU.ts, xlab = 'Time', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))
 ```
-```{r}
-summary(AU.ts)
-```
+
 
