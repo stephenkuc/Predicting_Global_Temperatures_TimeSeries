@@ -15,6 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(forecast)
 library(lubridate)
 library(zoo)
+library(ggplot2)
 ```
 
 
@@ -123,8 +124,10 @@ autoplot(na.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
 # Further EDA into North American Time Series
 
 autoplot(diff(na.train.ts))
-acf(diff(na.train.ts), main = 'Autocorrelation of differenced NA Ts')
-acf(na.train.ts, main = 'Autocorrelation of NA TS')
+acf(diff(na.train.ts), main = '')
+title('Autocorrelation of differenced NA Ts')
+acf(na.train.ts, main = '')
+title('Autocorrelation of NA TS')
 
 # stl() function to see seasonal, trend, and irregular components
 na.stl <- stl(na.train.ts, s.window = 'periodic')
@@ -148,8 +151,10 @@ autoplot(sa.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
 # Further EDA into South American Time Series
 
 autoplot(diff(sa.train.ts))
-acf(diff(sa.train.ts), main = 'Autocorrelation of differenced SA Ts')
-acf(sa.train.ts, main = 'Autocorrelation of SA TS')
+acf(diff(sa.train.ts), main = '')
+title('Autocorrelation of differenced SA Ts')
+acf(sa.train.ts, main = '')
+title('Autocorrelation of SA TS')
 
 # stl() function to see seasonal, trend, and irregular components
 sa.stl <- stl(sa.train.ts, s.window = 'periodic')
@@ -182,7 +187,9 @@ autoplot(af.train.ts, xlab = 'Year', ylab = 'Average Temperature', bty = 'l', yl
 
 autoplot(diff(af.train.ts))
 acf(diff(af.train.ts), main = '')
+title('Autocorrelation of difference AF TS')
 acf(af.train.ts, main = '')
+title('Autocorrelation of AF TS')
 af.stl <- stl(af.train.ts, s.window = 'periodic')
 plot(af.stl)
 ```
@@ -208,8 +215,10 @@ autoplot(eu.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
 # Further EDA into European Time Series
 
 autoplot(diff(eu.train.ts))
-acf(diff(eu.train.ts), main = 'Autocorrelation of differenced EU Ts')
-acf(eu.train.ts, main = 'Autocorrelation of EU TS')
+acf(diff(eu.train.ts), main = '')
+title('Autocorrelation of differenced EU Ts')
+acf(eu.train.ts, main = '')
+title('Autocorrelation of EU TS')
 
 # stl() function to see seasonal, trend, and irregular components
 eu.stl <- stl(eu.train.ts, s.window = 'periodic')
@@ -238,8 +247,10 @@ autoplot(as.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
 # Further EDA into Asia Time Series
 
 autoplot(diff(as.train.ts))
-acf(diff(as.train.ts), main = 'Autocorrelation of differenced Asia Ts')
-acf(as.train.ts, main = 'Autocorrelation of Asia TS')
+acf(diff(as.train.ts), main = '')
+title('Autocorrelation of differenced Asia Ts')
+acf(as.train.ts, main = '')
+title('Autocorrelation of Asia TS')
 
 # stl() function to see seasonal, trend, and irregular components
 as.stl <- stl(as.train.ts, s.window = 'periodic')
@@ -266,8 +277,10 @@ autoplot(au.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
 # Further EDA into Australia Time Series
 
 autoplot(diff(au.train.ts))
-acf(diff(au.train.ts), main = 'Autocorrelation of differenced Australia Ts')
-acf(au.train.ts, main = 'Autocorrelation of Australia TS')
+acf(diff(au.train.ts), main = '')
+title('Autocorrelation of differenced Australia Ts')
+acf(au.train.ts, main = '')
+title('Autocorrelation of Australia TS')
 
 # stl() function to see seasonal, trend, and irregular components
 au.stl <- stl(au.train.ts, s.window = 'periodic')
@@ -288,7 +301,7 @@ NA.ma <- rollmean(na.train.ts, k = 12, align = 'right')
 
 plot(na.train.ts, ylab = "Temperature", xlab = "Year", bty = "l",  xaxt = "n"
      , main = "North America Temperature with Holt-Winter's and Moving Average", flty = 2)
-axis(side= 1, at = seq(1900, 2000, 10), labels = format(seq(1900, 2000, 10)))
+axis(side = 1, at = seq(1900, 2000, 10), labels = format(seq(1900, 2000, 10)))
 lines(NA.hw$fitted, col = "blue")
 lines(NA.ma, col = "red")
 
@@ -311,7 +324,7 @@ EU.hw <- ets(eu.train.ts, model = "ZZZ", alpha = .2)
 EU.ma <- rollmean(eu.train.ts, k = 12, align = 'right')
 
 plot(eu.train.ts, ylab = "Temperature", xlab = "Year", bty = "l",  xaxt = "n", main = "Europe Temperature with Holt-Winter's and Moving Average", flty = 2)
-axis(side= 1, at = seq(1900, 2000, 10), labels = format(seq(1900, 2000, 10)))
+axis(side = 1, at = seq(1900, 2000, 10), labels = format(seq(1900, 2000, 10)))
 lines(EU.hw$fitted, col = "blue")
 lines(EU.ma, col = "red")
 
@@ -320,3 +333,75 @@ lines(EU.ma, col = "red")
 summary(EU.hw)
 
 ```
+
+
+```{r}
+# South America
+
+SA.hw <- ets(sa.train.ts, model = "ZZZ", alpha = .2)
+
+SA.ma <- rollmean(sa.train.ts, k = 12, align = 'right')
+
+plot(sa.train.ts, ylab = "Temperature", xlab = "Year", bty = "l",  xaxt = "n", main = "South America Temperature with Holt-Winter's and Moving Average", flty = 2)
+axis(side = 1, at = seq(1900, 2000, 10), labels = format(seq(1900, 2000, 10)))
+lines(SA.hw$fitted, col = "blue")
+lines(SA.ma, col = "red")
+```
+
+```{r}
+summary(SA.hw)
+```
+
+
+```{r}
+# Africa
+
+AF.hw <- ets(af.train.ts, model = "ZZZ", alpha = .2)
+
+AF.ma <- rollmean(af.train.ts, k = 12, align = 'right')
+
+plot(af.train.ts, ylab = "Temperature", xlab = "Year", bty = "l",  xaxt = "n", main = "Africa Temperature with Holt-Winter's and Moving Average", flty = 2)
+axis(side = 1, at = seq(1900, 2000, 10), labels = format(seq(1900, 2000, 10)))
+lines(AF.hw$fitted, col = "blue")
+lines(AF.ma, col = "red")
+```
+```{r}
+summary(AF.hw)
+```
+
+
+
+```{r}
+# Asia
+
+AS.hw <- ets(as.train.ts, model = "ZZZ", alpha = .2)
+
+AS.ma <- rollmean(as.train.ts, k = 12, align = 'right')
+
+plot(as.train.ts, ylab = "Temperature", xlab = "Year", bty = "l",  xaxt = "n", main = "Asia Temperature with Holt-Winter's and Moving Average", flty = 2)
+axis(side = 1, at = seq(1900, 2000, 10), labels = format(seq(1900, 2000, 10)))
+lines(AS.hw$fitted, col = "blue")
+lines(AS.ma, col = "red")
+```
+
+```{r}
+summary(AS.hw)
+```
+
+```{r}
+# Australia
+AU.hw <- ets(au.train.ts, model = "ZZZ", alpha = .2)
+
+AU.ma <- rollmean(au.train.ts, k = 12, align = 'right')
+
+plot(au.train.ts, ylab = "Temperature", xlab = "Year", bty = "l",  xaxt = "n", main = "Australia Temperature with Holt-Winter's and Moving Average", flty = 2)
+axis(side = 1, at = seq(1900, 2000, 10), labels = format(seq(1900, 2000, 10)))
+lines(AU.hw$fitted, col = "blue")
+lines(AU.ma, col = "red")
+```
+
+```{r}
+summary(AU.hw)
+```
+
+
