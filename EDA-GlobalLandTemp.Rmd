@@ -124,7 +124,7 @@ autoplot(na.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
 # Further EDA into North American Time Series
 
 autoplot(diff(na.train.ts))
-acf(diff(na.train.ts), main = '')
+acf(diff(diff(diff(diff(na.train.ts)))), main = '')
 title('Autocorrelation of differenced NA Ts')
 acf(na.train.ts, main = '')
 title('Autocorrelation of NA TS')
@@ -151,7 +151,7 @@ autoplot(sa.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
 # Further EDA into South American Time Series
 
 autoplot(diff(sa.train.ts))
-acf(diff(sa.train.ts), main = '')
+acf(diff(diff(diff(diff(sa.train.ts)))), main = '')
 title('Autocorrelation of differenced SA Ts')
 acf(sa.train.ts, main = '')
 title('Autocorrelation of SA TS')
@@ -186,7 +186,7 @@ autoplot(af.train.ts, xlab = 'Year', ylab = 'Average Temperature', bty = 'l', yl
 # Further EDA of Africa Data
 
 autoplot(diff(af.train.ts))
-acf(diff(af.train.ts), main = '')
+acf(diff(diff(diff(diff(diff(af.train.ts))))), main = '')
 title('Autocorrelation of difference AF TS')
 acf(af.train.ts, main = '')
 title('Autocorrelation of AF TS')
@@ -215,7 +215,7 @@ autoplot(eu.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
 # Further EDA into European Time Series
 
 autoplot(diff(eu.train.ts))
-acf(diff(eu.train.ts), main = '')
+acf(diff(diff(diff(diff(eu.train.ts)))), main = '')
 title('Autocorrelation of differenced EU Ts')
 acf(eu.train.ts, main = '')
 title('Autocorrelation of EU TS')
@@ -247,7 +247,7 @@ autoplot(as.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
 # Further EDA into Asia Time Series
 
 autoplot(diff(as.train.ts))
-acf(diff(as.train.ts), main = '')
+acf(diff(diff(diff(diff(diff(as.train.ts))))), main = '')
 title('Autocorrelation of differenced Asia Ts')
 acf(as.train.ts, main = '')
 title('Autocorrelation of Asia TS')
@@ -276,8 +276,8 @@ autoplot(au.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
 ```{r}
 # Further EDA into Australia Time Series
 
-autoplot(diff(au.train.ts))
-acf(diff(au.train.ts), main = '')
+autoplot(diff(diff(diff(diff(au.train.ts)))))
+acf(diff(diff(diff(diff(au.train.ts)))), main = '')
 title('Autocorrelation of differenced Australia Ts')
 acf(au.train.ts, main = '')
 title('Autocorrelation of Australia TS')
