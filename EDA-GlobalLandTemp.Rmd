@@ -124,7 +124,7 @@ autoplot(na.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
 # Further EDA into North American Time Series
 
 autoplot(diff(na.train.ts))
-acf(diff(diff(diff(diff(na.train.ts)))), main = '')
+acf(diff(diff(na.train.ts, lag = 12), lag = 1), main = '')
 title('Autocorrelation of differenced NA Ts')
 acf(na.train.ts, main = '')
 title('Autocorrelation of NA TS')
@@ -151,7 +151,7 @@ autoplot(sa.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
 # Further EDA into South American Time Series
 
 autoplot(diff(sa.train.ts))
-acf(diff(diff(diff(diff(sa.train.ts)))), main = '')
+acf(diff(diff(sa.train.ts, lag = 12), lag = 1), main = '')
 title('Autocorrelation of differenced SA Ts')
 acf(sa.train.ts, main = '')
 title('Autocorrelation of SA TS')
@@ -186,7 +186,7 @@ autoplot(af.train.ts, xlab = 'Year', ylab = 'Average Temperature', bty = 'l', yl
 # Further EDA of Africa Data
 
 autoplot(diff(af.train.ts))
-acf(diff(diff(diff(diff(diff(af.train.ts))))), main = '')
+acf(diff(diff(af.train.ts, lag = 12), lag = 1), main = '')
 title('Autocorrelation of difference AF TS')
 acf(af.train.ts, main = '')
 title('Autocorrelation of AF TS')
@@ -215,7 +215,7 @@ autoplot(eu.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
 # Further EDA into European Time Series
 
 autoplot(diff(eu.train.ts))
-acf(diff(diff(diff(diff(eu.train.ts)))), main = '')
+acf(diff(diff(eu.train.ts, lag = 12), lag = 1), main = '')
 title('Autocorrelation of differenced EU Ts')
 acf(eu.train.ts, main = '')
 title('Autocorrelation of EU TS')
@@ -247,7 +247,7 @@ autoplot(as.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
 # Further EDA into Asia Time Series
 
 autoplot(diff(as.train.ts))
-acf(diff(diff(diff(diff(diff(as.train.ts))))), main = '')
+acf(diff(diff(as.train.ts, lag = 12), lag = 1), main = '')
 title('Autocorrelation of differenced Asia Ts')
 acf(as.train.ts, main = '')
 title('Autocorrelation of Asia TS')
@@ -307,12 +307,26 @@ lines(NA.ma, col = "red")
 
 ```
 
+```{r}
+### NA linear model with seasonality and trend 
+na.lm <- tslm(na.train.ts ~ trend + season)
+nalm.pred <- forecast(na.lm, h = length(na.val.ts))
+data.frame(Date = val.na.temps$dt,
+           Forecast = nalm.pred$mean,
+           True = na.val.ts)
+```
+
+
+
+
+
+
+
 This seems to fit fairly well. Let's see a summary of the model
 
 ```{r}
-
 summary(NA.hw)
-
+summary(na.lm)
 ```
 
 Now, for Europe
@@ -329,15 +343,27 @@ lines(EU.hw$fitted, col = "blue")
 lines(EU.ma, col = "red")
 
 ```
+
+```{r}
+### EU linear model with seasonality and trend 
+eu.lm <- tslm(eu.train.ts ~ trend + season)
+eulm.pred <- forecast(eu.lm, h = length(eu.val.ts))
+data.frame(Date = val.eu.temps$dt,
+           Forecast = eulm.pred$mean,
+           True = eu.val.ts)
+```
+
+
+
+
 ```{r}
 summary(EU.hw)
-
+summary(eu.lm)
 ```
 
 
 ```{r}
 # South America
-
 SA.hw <- ets(sa.train.ts, model = "ZZZ", alpha = .2)
 
 SA.ma <- rollmean(sa.train.ts, k = 12, align = 'right')
@@ -347,9 +373,21 @@ axis(side = 1, at = seq(1900, 2000, 10), labels = format(seq(1900, 2000, 10)))
 lines(SA.hw$fitted, col = "blue")
 lines(SA.ma, col = "red")
 ```
+```{r}
+### SA linear model with seasonality and trend 
+sa.lm <- tslm(sa.train.ts ~ trend + season)
+salm.pred <- forecast(sa.lm, h = length(sa.val.ts))
+data.frame(Date = val.sa.temps$dt,
+           Forecast = salm.pred$mean,
+           True = sa.val.ts)
+```
+
+
+
 
 ```{r}
 summary(SA.hw)
+summary(sa.lm)
 ```
 
 
@@ -366,7 +404,21 @@ lines(AF.hw$fitted, col = "blue")
 lines(AF.ma, col = "red")
 ```
 ```{r}
+### AF linear model with seasonality and trend 
+af.lm <- tslm(af.train.ts ~ trend + season)
+aflm.pred <- forecast(af.lm, h = length(af.val.ts))
+data.frame(Date = val.af.temps$dt,
+           Forecast = aflm.pred$mean,
+           True = af.val.ts)
+```
+
+
+
+
+
+```{r}
 summary(AF.hw)
+summary(af.lm)
 ```
 
 
@@ -385,7 +437,21 @@ lines(AS.ma, col = "red")
 ```
 
 ```{r}
+### AS linear model with seasonality and trend 
+as.lm <- tslm(as.train.ts ~ trend + season)
+aslm.pred <- forecast(as.lm, h = length(as.val.ts))
+data.frame(Date = val.as.temps$dt,
+           Forecast = aslm.pred$mean,
+           True = as.val.ts)
+```
+
+
+
+
+
+```{r}
 summary(AS.hw)
+summary(as.lm)
 ```
 
 ```{r}
@@ -401,7 +467,21 @@ lines(AU.ma, col = "red")
 ```
 
 ```{r}
+### AU linear model with seasonality and trend 
+au.lm <- tslm(au.train.ts ~ trend + season)
+aulm.pred <- forecast(au.lm, h = length(au.val.ts))
+data.frame(Date = val.au.temps$dt,
+           Forecast = aulm.pred$mean,
+           True = au.val.ts)
+```
+
+
+
+
+
+```{r}
 summary(AU.hw)
+summary(au.lm)
 ```
 
 
