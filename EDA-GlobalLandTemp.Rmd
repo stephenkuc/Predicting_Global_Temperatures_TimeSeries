@@ -574,3 +574,35 @@ lines(au.val.ts)
 
 ```
 
+### North America Linear & Neural Net
+
+```{r}
+# linear model
+
+na.lm <- tslm(na.train.ts ~ trend + season)
+nalm.pred <- forecast(na.lm, h = length(sa.val.ts))
+data.frame(Date = val.na.temps$dt,
+           Forecast = nalm.pred$mean,
+           True = na.val.ts)
+
+
+```
+```{r}
+#Neural network (nnetar)
+na.nn <- nnetar(na.train.ts,linout = TRUE)
+na_nn.pred <- forecast(na.nn, h = length(na.val.ts))
+summary(na_nn.pred)
+
+```
+
+Plotting results for North America
+```{r}
+plot(na.train.ts, xlim = c(2005,2015),ylab = "Temperature")
+lines(na_nn.pred$fitted, lwd = 2, col = "red")
+lines(nalm.pred$fitted, lwd = 2, col = "yellow")
+lines(na_nn.pred$mean, lwd = 2, col = "blue", lty = 2)
+lines(nalm.pred$mean, lwd = 2, col = "green", lty = 2)
+lines(na.val.ts, lwd = 2)
+
+```
+
