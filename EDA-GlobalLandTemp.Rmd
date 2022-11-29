@@ -26,30 +26,33 @@ head(land.temps)
 land.temps$dt <- as.Date(land.temps$dt)
 land.temps
 ```
+
+
+
 ```{r}
 # North America Creation
 NA.temps <- as.data.frame(land.temps[land.temps$Country == 'North America',])
 rownames(NA.temps) <- 1:nrow(NA.temps)
 na.temps <- NA.temps[1577:2940,]
 rownames(na.temps) <- 1:nrow(na.temps)
-train.na.temps <- na.temps[1:1352,]
-val.na.temps <- na.temps[1353:1364,]
+train.na.temps <- na.temps[1:1236,]
+val.na.temps <- na.temps[1237:1364,]
 
 # South america
 SA.temps <- land.temps[land.temps$Country == 'South America',]
 rownames(SA.temps) <- 1:nrow(SA.temps)
 sa.temps <- SA.temps[589:1952,]
 rownames(sa.temps) <- 1:nrow(sa.temps)
-train.sa.temps <- sa.temps[1:1352,]
-val.sa.temps <- sa.temps[1353:1364,]
+train.sa.temps <- sa.temps[1:1236,]
+val.sa.temps <- sa.temps[1237:1364,]
 
 # Africa
 AF.temps <- land.temps[land.temps$Country == 'Africa',]
 rownames(AF.temps) <- 1:nrow(AF.temps)
 af.temps <- AF.temps[601:1964,]
 rownames(af.temps) <- 1:nrow(af.temps)
-train.af.temps <- af.temps[1:1352,]
-val.af.temps <- af.temps[1353:1364,]
+train.af.temps <- af.temps[1:1236,]
+val.af.temps <- af.temps[1237:1364,]
 
 
 # Europe
@@ -57,24 +60,24 @@ EU.temps <- land.temps[land.temps$Country == 'Europe',]
 rownames(EU.temps) <- 1:nrow(EU.temps)
 eu.temps <- EU.temps[1875:3238,]
 rownames(eu.temps) <- 1:nrow(eu.temps)
-train.eu.temps <- eu.temps[1:1352,]
-val.eu.temps <- eu.temps[1353:1364,]
+train.eu.temps <- eu.temps[1:1236,]
+val.eu.temps <- eu.temps[1237:1364,]
 
 # Asia
 AS.temps <- land.temps[land.temps$Country == 'Asia',]
 rownames(AS.temps) <- 1:nrow(AS.temps)
 as.temps <- AS.temps[1006:2369,]
 rownames(as.temps) <- 1:nrow(as.temps)
-train.as.temps <- as.temps[1:1352,]
-val.as.temps <- as.temps[1353:1364,]
+train.as.temps <- as.temps[1:1236,]
+val.as.temps <- as.temps[1237:1364,]
 
 # Australia
 AU.temps <- land.temps[land.temps$Country == 'Australia',]
 rownames(AU.temps) <- 1:nrow(AU.temps)
 au.temps <- AU.temps[571:1934,]
 rownames(au.temps) <- 1:nrow(au.temps)
-train.au.temps <- au.temps[1:1352,]
-val.au.temps <- au.temps[1353:1364,]
+train.au.temps <- au.temps[1:1236,]
+val.au.temps <- au.temps[1237:1364,]
 ```
 
 
@@ -351,6 +354,7 @@ eulm.pred <- forecast(eu.lm, h = length(eu.val.ts))
 data.frame(Date = val.eu.temps$dt,
            Forecast = eulm.pred$mean,
            True = eu.val.ts)
+accuracy(eulm.pred, eu.val.ts)
 ```
 
 
