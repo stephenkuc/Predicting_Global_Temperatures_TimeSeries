@@ -331,6 +331,21 @@ This seems to fit fairly well. Let's see a summary of the model
 summary(NA.hw)
 summary(na.lm)
 ```
+```{r}
+#Neural network (nnetar)
+na.nn <- nnetar(na.train.ts,linout = TRUE)
+
+
+na_nn.pred <- forecast(na.nn, h = length(na.val.ts))
+summary(na_nn.pred)
+
+plot(na.train.ts, xlim = c(2005,2015),ylab = "Temperature")
+lines(na_nn.pred$fitted, lwd = 2, col = "red")
+lines(nalm.pred$fitted, lwd = 2, col = "yellow")
+lines(na_nn.pred$mean, lwd = 2, col = "blue", lty = 2)
+lines(nalm.pred$mean, lwd = 2, col = "green", lty = 2)
+lines(na.val.ts)
+```
 
 Now, for Europe
 
@@ -364,7 +379,21 @@ accuracy(eulm.pred, eu.val.ts)
 summary(EU.hw)
 summary(eu.lm)
 ```
+```{r}
+#Neural network (nnetar)
+eu.nn <- nnetar(eu.train.ts,linout = TRUE)
 
+
+eu_nn.pred <- forecast(eu.nn, h = length(eu.val.ts))
+summary(eu_nn.pred)
+
+plot(eu.train.ts, xlim = c(2005,2015),ylab = "Temperature")
+lines(eu_nn.pred$fitted, lwd = 2, col = "red")
+lines(eulm.pred$fitted, lwd = 2, col = "yellow")
+lines(eu_nn.pred$mean, lwd = 2, col = "blue", lty = 2)
+lines(eulm.pred$mean, lwd = 2, col = "green", lty = 2)
+lines(eu.val.ts)
+```
 
 ```{r}
 # South America
@@ -393,7 +422,21 @@ data.frame(Date = val.sa.temps$dt,
 summary(SA.hw)
 summary(sa.lm)
 ```
+```{r}
+#Neural network (nnetar)
+sa.nn <- nnetar(sa.train.ts,linout = TRUE)
 
+
+sa_nn.pred <- forecast(sa.nn, h = length(sa.val.ts))
+summary(sa_nn.pred)
+
+plot(sa.train.ts, xlim = c(2005,2015),ylab = "Temperature")
+lines(sa_nn.pred$fitted, lwd = 2, col = "red")
+lines(salm.pred$fitted, lwd = 2, col = "yellow")
+lines(sa_nn.pred$mean, lwd = 2, col = "blue", lty = 2)
+lines(salm.pred$mean, lwd = 2, col = "green", lty = 2)
+lines(sa.val.ts)
+```
 
 ```{r}
 # Africa
@@ -423,6 +466,21 @@ data.frame(Date = val.af.temps$dt,
 ```{r}
 summary(AF.hw)
 summary(af.lm)
+```
+```{r}
+#Neural network (nnetar)
+af.nn <- nnetar(af.train.ts,linout = TRUE)
+
+
+af_nn.pred <- forecast(af.nn, h = length(af.val.ts))
+summary(af_nn.pred)
+
+plot(af.train.ts, xlim = c(2005,2015),ylab = "Temperature")
+lines(af_nn.pred$fitted, lwd = 2, col = "red")
+lines(aflm.pred$fitted, lwd = 2, col = "yellow")
+lines(af_nn.pred$mean, lwd = 2, col = "blue", lty = 2)
+lines(aflm.pred$mean, lwd = 2, col = "green", lty = 2)
+lines(af.val.ts)
 ```
 
 
@@ -457,6 +515,22 @@ data.frame(Date = val.as.temps$dt,
 summary(AS.hw)
 summary(as.lm)
 ```
+```{r}
+#Neural network (nnetar)
+as.nn <- nnetar(as.train.ts,linout = TRUE)
+
+
+as_nn.pred <- forecast(as.nn, h = length(as.val.ts))
+summary(as_nn.pred)
+
+plot(as.train.ts, xlim = c(2005,2015),ylab = "Temperature")
+lines(as_nn.pred$fitted, lwd = 2, col = "red")
+lines(aslm.pred$fitted, lwd = 2, col = "yellow")
+lines(as_nn.pred$mean, lwd = 2, col = "blue", lty = 2)
+lines(aslm.pred$mean, lwd = 2, col = "green", lty = 2)
+lines(as.val.ts)
+
+```
 
 ```{r}
 # Australia
@@ -487,5 +561,52 @@ data.frame(Date = val.au.temps$dt,
 summary(AU.hw)
 summary(au.lm)
 ```
+```{r}
+#Neural network (nnetar)
+au.nn <- nnetar(au.train.ts,linout = TRUE)
 
+
+nn.pred <- forecast(au.nn, h = length(au.val.ts))
+summary(nn.pred)
+
+plot(au.train.ts,ylim = c(13, 30), xlim = c(2005,2020),ylab = "Temperature")
+lines(nn.pred$fitted, lwd = 2, col = "red")
+lines(aulm.pred$fitted, lwd = 2, col = "yellow")
+lines(nn.pred$mean, lwd = 2, col = "blue", lty = 2)
+lines(aulm.pred$mean, lwd = 2, col = "green", lty = 2)
+lines(au.val.ts)
+
+```
+
+### North America Linear & Neural Net
+
+```{r}
+# linear model
+
+na.lm <- tslm(na.train.ts ~ trend + season)
+nalm.pred <- forecast(na.lm, h = length(sa.val.ts))
+data.frame(Date = val.na.temps$dt,
+           Forecast = nalm.pred$mean,
+           True = na.val.ts)
+
+
+```
+```{r}
+#Neural network (nnetar)
+na.nn <- nnetar(na.train.ts,linout = TRUE)
+na_nn.pred <- forecast(na.nn, h = length(na.val.ts))
+summary(na_nn.pred)
+
+```
+
+Plotting results for North America
+```{r}
+plot(na.train.ts, xlim = c(2005,2015),ylab = "Temperature")
+lines(na_nn.pred$fitted, lwd = 2, col = "red")
+lines(nalm.pred$fitted, lwd = 2, col = "yellow")
+lines(na_nn.pred$mean, lwd = 2, col = "blue", lty = 2)
+lines(nalm.pred$mean, lwd = 2, col = "green", lty = 2)
+lines(na.val.ts, lwd = 2)
+
+```
 
