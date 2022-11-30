@@ -599,7 +599,7 @@ accuracy(af_nn.pred$mean, af.val.ts)
 
 
 ```{r}
-plot(af.train.ts, xlim = c(2005,2015),ylab = "Temperature")
+plot(af.train.ts, xlim = c(2003,2014),ylab = "Temperature")
 lines(af_nn.pred$fitted, lwd = 2, col = "red")
 lines(aflm.pred$fitted, lwd = 2, col = "yellow")
 lines(af_nn.pred$mean, lwd = 2, col = "blue", lty = 2)
@@ -675,7 +675,7 @@ accuracy(as_nn.pred$mean, as.val.ts)
 
 
 ```{r}
-plot(as.train.ts, xlim = c(2005,2015), ylab = "Temperature")
+plot(as.train.ts, xlim = c(2003,2014), ylab = "Temperature")
 lines(as_nn.pred$fitted, lwd = 2, col = "red")
 lines(aslm.pred$fitted, lwd = 2, col = "yellow")
 lines(as_nn.pred$mean, lwd = 2, col = "blue", lty = 2)
@@ -750,7 +750,7 @@ accuracy(nn.pred$mean, au.val.ts)
 
 
 ```{r}
-plot(au.train.ts, ylim = c(13, 30), xlim = c(2005,2020), ylab = "Temperature")
+plot(au.train.ts, ylim = c(13, 30), xlim = c(2003,2014), ylab = "Temperature")
 lines(nn.pred$fitted, lwd = 2, col = "red")
 lines(aulm.pred$fitted, lwd = 2, col = "yellow")
 lines(nn.pred$mean, lwd = 2, col = "blue", lty = 2)
