@@ -352,8 +352,6 @@ summary(na.lm)
 nalm.pred.df <- data.frame(Date = val.na.temps$dt,
                            Forecast = nalm.pred$mean,
                            True = na.val.ts)
-
-accuracy(nalm.pred, na.val.ts)
 ```
 
 
@@ -368,28 +366,54 @@ na.nn <- nnetar(na.train.ts,linout = TRUE)
 
 na_nn.pred <- forecast(na.nn, h = length(na.val.ts))
 summary(na_nn.pred)
-accuracy(na_nn.pred$mean, na.val.ts)
 ```
 
 ```{r}
-plot(eu.train.ts, xlim = c(2003,2014),ylab = "Temperature")
-lines(eu_nn.pred$fitted, lwd = 2, col = "red")
-lines(eulm.pred$fitted, lwd = 2, col = "yellow")
-lines(eu_nn.pred$mean, lwd = 2, col = "blue", lty = 2)
-lines(eulm.pred$mean, lwd = 2, col = "green", lty = 2)
-lines(eu.val.ts)
+plot(na.train.ts, xlim = c(2003,2014),ylab = "Temperature")
+lines(na_nn.pred$fitted, lwd = 2, col = "red")
+lines(nalm.pred$fitted, lwd = 2, col = "yellow")
+lines(na_nn.pred$mean, lwd = 2, col = "blue", lty = 2)
+lines(nalm.pred$mean, lwd = 2, col = "green", lty = 2)
+lines(na.val.ts)
 ```
 
 
 ```{r}
-autoplot(na.train.ts, ylab = "Temperature")+
+autoplot(na.train.ts, ylab = "Temperature", main = "North America Training Comparison")+
   autolayer(na_nn.pred$fitted)+
-  autolayer(nalm.pred$fitted)
+  autolayer(nalm.pred$fitted)+
+  scale_color_discrete(label = c("Holt-Winter","Neural Network","Linear Regression"))+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 
-autoplot(na.val.ts, ylab = "Temperature")+
+autoplot(na.val.ts, ylab = "Temperature", main = "North America Validation Comparison")+
   autolayer(na_nn.pred$mean)+
   autolayer(nalm.pred$mean)+
-  autolayer(NA.hwpred$mean)
+  autolayer(NA.hwpred$mean)+
+  scale_color_discrete(label = c("Holt-Winter","Neural Network","Linear Regression"))+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+#### North America Model Metrics
+
+```{r}
+print("Holt-Winter Train and Test Set Metrics: ")
+accuracy(NA.hwpred, na.val.ts)
+
+print("Linear Regression Train and Test Set Metrics: ")
+accuracy(nalm.pred, na.val.ts)
+
+print("Neural Network Train and Test Set Metrics: ")
+accuracy(na_nn.pred, na.val.ts)
 ```
 
 
@@ -424,8 +448,6 @@ summary(eu.lm)
 eulm.pred.df <- data.frame(Date = val.eu.temps$dt,
                            Forecast = eulm.pred$mean,
                            True = eu.val.ts)
-
-accuracy(eulm.pred, eu.val.ts)
 ```
 
 
@@ -439,9 +461,9 @@ eu.nn <- nnetar(eu.train.ts, linout = TRUE)
 
 eu_nn.pred <- forecast(eu.nn, h = length(eu.val.ts))
 summary(eu_nn.pred)
-accuracy(eu_nn.pred$mean, eu.val.ts)
 ```
 
+#### Europe Modeling Plots
 
 ```{r}
 plot(eu.train.ts, xlim = c(2003,2014),ylab = "Temperature")
@@ -456,7 +478,7 @@ lines(eu.val.ts)
 
 
 ```{r}
-autoplot(eu.train.ts, ylab = "Temperature")+
+autoplot(eu.train.ts, ylab = "Temperature", main = "Europe Training Comparison")+
   autolayer(eu_nn.pred$fitted)+
   autolayer(eulm.pred$fitted)+
   scale_color_discrete(label = c("Neural Network","Linear Regression"))+
@@ -467,7 +489,7 @@ autoplot(eu.train.ts, ylab = "Temperature")+
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 
-autoplot(eu.val.ts, ylab = "Temperature")+
+autoplot(eu.val.ts, ylab = "Temperature", main = "Europe Validation Comparison")+
   autolayer(eu_nn.pred$mean)+
   autolayer(eulm.pred$mean)+
   autolayer(EU.hwpred$mean)+
@@ -480,8 +502,18 @@ autoplot(eu.val.ts, ylab = "Temperature")+
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
+#### Europe Modeling Metrics
 
+```{r}
+print("Holt-Winter Train and Test Set Metrics: ")
+accuracy(EU.hwpred, eu.val.ts)
 
+print("Linear Regression Train and Test Set Metrics: ")
+accuracy(eulm.pred, eu.val.ts)
+
+print("Neural Network Train and Test Set Metrics: ")
+accuracy(eu_nn.pred, eu.val.ts)
+```
 
 
 ### South America
@@ -519,7 +551,6 @@ summary(sa.lm)
 salm.pred.df <- data.frame(Date = val.sa.temps$dt,
                            Forecast = salm.pred$mean,
                            True = sa.val.ts)
-accuracy(salm.pred, sa.val.ts)
 ```
 
 
@@ -533,9 +564,9 @@ sa.nn <- nnetar(sa.train.ts,linout = TRUE)
 
 sa_nn.pred <- forecast(sa.nn, h = length(sa.val.ts))
 summary(sa_nn.pred)
-accuracy(sa_nn.pred$mean, sa.val.ts)
 ```
 
+#### South America Modeling Plots
 
 ```{r}
 plot(sa.train.ts, xlim = c(2003,2014),ylab = "Temperature")
@@ -548,7 +579,7 @@ lines(sa.val.ts)
 
 
 ```{r}
-autoplot(sa.train.ts, ylab = "Temperature")+
+autoplot(sa.train.ts, ylab = "Temperature", main = "South America Training Comparison")+
   autolayer(sa_nn.pred$fitted)+
   autolayer(salm.pred$fitted)+
   scale_color_discrete(label = c("Neural Network","Linear Regression"))+
@@ -559,7 +590,7 @@ autoplot(sa.train.ts, ylab = "Temperature")+
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 
-autoplot(sa.val.ts, ylab = "Temperature")+
+autoplot(sa.val.ts, ylab = "Temperature", main = "South America Validation Comparison")+
   autolayer(sa_nn.pred$mean)+
   autolayer(salm.pred$mean)+
   autolayer(SA.hwpred$mean)+
@@ -572,8 +603,18 @@ autoplot(sa.val.ts, ylab = "Temperature")+
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
+#### South America Model Metrics
 
+```{r}
+print("Holt-Winter Train and Test Set Metrics: ")
+accuracy(SA.hwpred, sa.val.ts)
 
+print("Linear Regression Train and Test Set Metrics: ")
+accuracy(salm.pred, sa.val.ts)
+
+print("Neural Network Train and Test Set Metrics: ")
+accuracy(sa_nn.pred, sa.val.ts)
+```
 
 
 ### Africa
@@ -610,8 +651,6 @@ summary(af.lm)
 aflm.pred.df <- data.frame(Date = val.af.temps$dt,
                            Forecast = aflm.pred$mean,
                            True = af.val.ts)
-
-accuracy(aflm.pred, af.val.ts)
 ```
 
 
@@ -625,10 +664,9 @@ af.nn <- nnetar(af.train.ts,linout = TRUE)
 
 af_nn.pred <- forecast(af.nn, h = length(af.val.ts))
 summary(af_nn.pred)
-accuracy(af_nn.pred$mean, af.val.ts)
 ```
 
-
+#### Africa Modeling Plots
 
 ```{r}
 plot(af.train.ts, xlim = c(2003,2014),ylab = "Temperature")
@@ -639,8 +677,10 @@ lines(aflm.pred$mean, lwd = 2, col = "green", lty = 2)
 lines(af.val.ts)
 ```
 
+
+
 ```{r}
-autoplot(af.train.ts, ylab = "Temperature")+
+autoplot(af.train.ts, ylab = "Temperature", main = "Africa Training Comparison")+
   autolayer(af_nn.pred$fitted)+
   autolayer(aflm.pred$fitted)+
   scale_color_discrete(label = c("Neural Network","Linear Regression"))+
@@ -651,7 +691,7 @@ autoplot(af.train.ts, ylab = "Temperature")+
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 
-autoplot(af.val.ts, ylab = "Temperature")+
+autoplot(af.val.ts, ylab = "Temperature", main = "Africa Validation Comparison")+
   autolayer(af_nn.pred$mean)+
   autolayer(aflm.pred$mean)+
   autolayer(AF.hwpred$mean)+
@@ -662,6 +702,19 @@ autoplot(af.val.ts, ylab = "Temperature")+
         axis.ticks.y = element_blank(),
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+#### Africa Modeling Metrics
+
+```{r}
+print("Holt-Winter Train and Test Set Metrics: ")
+accuracy(AF.hwpred, af.val.ts)
+
+print("Linear Regression Train and Test Set Metrics: ")
+accuracy(aflm.pred, af.val.ts)
+
+print("Neural Network Train and Test Set Metrics: ")
+accuracy(af_nn.pred, af.val.ts)
 ```
 
 
@@ -701,7 +754,6 @@ summary(as.lm)
 aslm.pred.df <- data.frame(Date = val.as.temps$dt,
                            Forecast = aslm.pred$mean,
                            True = as.val.ts)
-accuracy(aslm.pred, as.val.ts)
 ```
 
 
@@ -716,10 +768,9 @@ as.nn <- nnetar(as.train.ts,linout = TRUE)
 
 as_nn.pred <- forecast(as.nn, h = length(as.val.ts))
 summary(as_nn.pred)
-accuracy(as_nn.pred$mean, as.val.ts)
 ```
 
-
+#### Asia Modeling Plots
 
 ```{r}
 plot(as.train.ts, xlim = c(2003,2014), ylab = "Temperature")
@@ -732,7 +783,7 @@ lines(as.val.ts)
 
 
 ```{r}
-autoplot(as.train.ts, ylab = "Temperature")+
+autoplot(as.train.ts, ylab = "Temperature", main = "Asia Training Comparison")+
   autolayer(as_nn.pred$fitted)+
   autolayer(aslm.pred$fitted)+
   scale_color_discrete(label = c("Neural Network","Linear Regression"))+
@@ -743,7 +794,7 @@ autoplot(as.train.ts, ylab = "Temperature")+
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 
-autoplot(as.val.ts, ylab = "Temperature")+
+autoplot(as.val.ts, ylab = "Temperature", main = "Asia Validation Comparison")+
   autolayer(as_nn.pred$mean)+
   autolayer(aslm.pred$mean)+
   autolayer(AS.hwpred$mean)+
@@ -755,6 +806,21 @@ autoplot(as.val.ts, ylab = "Temperature")+
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
+
+
+#### Asia Model Metrics
+
+```{r}
+print("Holt-Winter Train and Test Set Metrics: ")
+accuracy(AS.hwpred, as.val.ts)
+
+print("Linear Regression Train and Test Set Metrics: ")
+accuracy(aslm.pred, as.val.ts)
+
+print("Neural Network Train and Test Set Metrics: ")
+accuracy(as_nn.pred, as.val.ts)
+```
+
 
 
 ### Australia
@@ -792,7 +858,6 @@ aulm.pred.df <- data.frame(Date = val.au.temps$dt,
                            Forecast = aulm.pred$mean,
                            True = au.val.ts)
 
-accuracy(aulm.pred, au.val.ts)
 ```
 
 
@@ -806,10 +871,9 @@ au.nn <- nnetar(au.train.ts,linout = TRUE)
 
 nn.pred <- forecast(au.nn, h = length(au.val.ts))
 summary(nn.pred)
-accuracy(nn.pred$mean, au.val.ts)
 ```
 
-
+#### Australia Modeling Plots
 
 ```{r}
 plot(au.train.ts, ylim = c(13, 30), xlim = c(2003,2014), ylab = "Temperature")
@@ -822,7 +886,7 @@ lines(au.val.ts)
 ```
 
 ```{r}
-autoplot(au.train.ts, ylab = "Temperature")+
+autoplot(au.train.ts, ylab = "Temperature", main = "Australia Training Comparison")+
   autolayer(nn.pred$fitted)+
   autolayer(aulm.pred$fitted)+
   scale_color_discrete(label = c("Neural Network","Linear Regression"))+
@@ -833,7 +897,7 @@ autoplot(au.train.ts, ylab = "Temperature")+
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 
-autoplot(au.val.ts, ylab = "Temperature")+
+autoplot(au.val.ts, ylab = "Temperature", main = "Australia Validation Comparison")+
   autolayer(nn.pred$mean)+
   autolayer(aulm.pred$mean)+
   autolayer(AU.hwpred$mean)+
@@ -845,3 +909,18 @@ autoplot(au.val.ts, ylab = "Temperature")+
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
+
+#### Australia Modeling Metrics
+
+```{r}
+print("Holt-Winter Train and Test Set Metrics: ")
+accuracy(AU.hwpred, au.val.ts)
+
+print("Linear Regression Train and Test Set Metrics: ")
+accuracy(aulm.pred, au.val.ts)
+
+print("Neural Network Train and Test Set Metrics: ")
+accuracy(nn.pred, au.val.ts)
+```
+
+
