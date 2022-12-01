@@ -324,7 +324,8 @@ As there is both trend and seasonality, let's try to do winter's exponential smo
 
 ```{r}
 # North america; 
-NA.hw <- ets(na.train.ts, model = "ZZZ", alpha = .2)
+NA.hw <- ets(na.train.ts, model = "ZZZ", alpha = .2, restrict = FALSE, 
+             allow.multiplicative.trend = TRUE)
 NA.hwpred <- forecast(NA.hw, h = length(na.val.ts))
 summary(NA.hw)
 
@@ -399,7 +400,8 @@ autoplot(na.val.ts, ylab = "Temperature")+
 
 ```{r}
 # Europe 
-EU.hw <- ets(eu.train.ts, model = "ZZZ", alpha = .2)
+EU.hw <- ets(eu.train.ts, model = "ZZZ", alpha = .2, restrict = FALSE, 
+             allow.multiplicative.trend = TRUE)
 EU.hwpred <- forecast(EU.hw, h = length(eu.val.ts))
 summary(EU.hw)
 
@@ -456,12 +458,26 @@ lines(eu.val.ts)
 ```{r}
 autoplot(eu.train.ts, ylab = "Temperature")+
   autolayer(eu_nn.pred$fitted)+
-  autolayer(eulm.pred$fitted)
+  autolayer(eulm.pred$fitted)+
+  scale_color_discrete(label = c("Neural Network","Linear Regression"))+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 
 autoplot(eu.val.ts, ylab = "Temperature")+
   autolayer(eu_nn.pred$mean)+
   autolayer(eulm.pred$mean)+
-  autolayer(EU.hwpred$mean)
+  autolayer(EU.hwpred$mean)+
+  scale_color_discrete(label = c("Holt-Winter","Neural Network","Linear Regression"))+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
 
@@ -475,7 +491,8 @@ autoplot(eu.val.ts, ylab = "Temperature")+
 
 ```{r}
 # South America
-SA.hw <- ets(sa.train.ts, model = "ZZZ", alpha = .2)
+SA.hw <- ets(sa.train.ts, model = "ZZZ", alpha = .2, restrict = FALSE, 
+             allow.multiplicative.trend = TRUE)
 SA.hwpred <- forecast(SA.hw, h = length(sa.val.ts))
 summary(SA.hw)
 
@@ -533,12 +550,26 @@ lines(sa.val.ts)
 ```{r}
 autoplot(sa.train.ts, ylab = "Temperature")+
   autolayer(sa_nn.pred$fitted)+
-  autolayer(salm.pred$fitted)
+  autolayer(salm.pred$fitted)+
+  scale_color_discrete(label = c("Neural Network","Linear Regression"))+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 
 autoplot(sa.val.ts, ylab = "Temperature")+
   autolayer(sa_nn.pred$mean)+
   autolayer(salm.pred$mean)+
-  autolayer(SA.hwpred$mean)
+  autolayer(SA.hwpred$mean)+
+  scale_color_discrete(label = c("Holt-Winter","Neural Network","Linear Regression"))+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
 
@@ -554,7 +585,8 @@ autoplot(sa.val.ts, ylab = "Temperature")+
 ```{r}
 # Africa
 
-AF.hw <- ets(af.train.ts, model = "ZZZ", alpha = .2)
+AF.hw <- ets(af.train.ts, model = "ZZZ", alpha = .2, restrict = FALSE, 
+             allow.multiplicative.trend = TRUE)
 AF.hwpred <- forecast(AF.hw, h = length(af.val.ts))
 summary(AF.hw)
 
@@ -610,12 +642,26 @@ lines(af.val.ts)
 ```{r}
 autoplot(af.train.ts, ylab = "Temperature")+
   autolayer(af_nn.pred$fitted)+
-  autolayer(aflm.pred$fitted)
+  autolayer(aflm.pred$fitted)+
+  scale_color_discrete(label = c("Neural Network","Linear Regression"))+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 
 autoplot(af.val.ts, ylab = "Temperature")+
   autolayer(af_nn.pred$mean)+
   autolayer(aflm.pred$mean)+
-  autolayer(AF.hwpred$mean)
+  autolayer(AF.hwpred$mean)+
+  scale_color_discrete(label = c("Holt-Winter","Neural Network","Linear Regression"))+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
 
@@ -627,7 +673,8 @@ autoplot(af.val.ts, ylab = "Temperature")+
 ```{r}
 # Asia
 
-AS.hw <- ets(as.train.ts, model = "ZZZ", alpha = .2)
+AS.hw <- ets(as.train.ts, model = "ZZZ", alpha = .2, restrict = FALSE, 
+             allow.multiplicative.trend = TRUE)
 AS.hwpred <- forecast(AS.hw, h = length(as.val.ts))
 summary(AS.hw)
 
@@ -687,12 +734,26 @@ lines(as.val.ts)
 ```{r}
 autoplot(as.train.ts, ylab = "Temperature")+
   autolayer(as_nn.pred$fitted)+
-  autolayer(aslm.pred$fitted)
+  autolayer(aslm.pred$fitted)+
+  scale_color_discrete(label = c("Neural Network","Linear Regression"))+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 
 autoplot(as.val.ts, ylab = "Temperature")+
   autolayer(as_nn.pred$mean)+
   autolayer(aslm.pred$mean)+
-  autolayer(AS.hwpred$mean)
+  autolayer(AS.hwpred$mean)+
+  scale_color_discrete(label = c("Holt-Winter","Neural Network","Linear Regression"))+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
 
@@ -702,7 +763,8 @@ autoplot(as.val.ts, ylab = "Temperature")+
 
 ```{r}
 # Australia
-AU.hw <- ets(au.train.ts, model = "ZZZ", alpha = .2)
+AU.hw <- ets(au.train.ts, model = "ZZZ", alpha = .2, restrict = FALSE, 
+             allow.multiplicative.trend = TRUE)
 AU.hwpred <- forecast(AU.hw, h = length(au.val.ts))
 summary(AU.hw)
 
@@ -762,10 +824,24 @@ lines(au.val.ts)
 ```{r}
 autoplot(au.train.ts, ylab = "Temperature")+
   autolayer(nn.pred$fitted)+
-  autolayer(aulm.pred$fitted)
+  autolayer(aulm.pred$fitted)+
+  scale_color_discrete(label = c("Neural Network","Linear Regression"))+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 
 autoplot(au.val.ts, ylab = "Temperature")+
   autolayer(nn.pred$mean)+
   autolayer(aulm.pred$mean)+
-  autolayer(AU.hwpred$mean)
+  autolayer(AU.hwpred$mean)+
+  scale_color_discrete(label = c("Holt-Winter","Neural Network","Linear Regression"))+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
