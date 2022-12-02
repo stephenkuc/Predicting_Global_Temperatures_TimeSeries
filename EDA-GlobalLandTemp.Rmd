@@ -6,7 +6,8 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE,
+                      warning = FALSE)
 ```
 
 
@@ -263,7 +264,7 @@ autoplot(au.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
 
 ```{r}
 # Further EDA into Australia Time Series
-autoplot(diff(diff(diff(diff(au.train.ts)))))
+autoplot(diff(au.train.ts))
 acf(diff(diff(diff(diff(au.train.ts)))), main = '')
 title('Autocorrelation of differenced Australia Ts')
 acf(au.train.ts, main = '')
@@ -849,3 +850,354 @@ accuracy(nn.pred, au.val.ts)
 ```
 
 The Linear regression and Holt-Winters results were nearly identical. While the linear regression had the worst training set RMSE, it had the best validation set RMSE. Holt-Winters, though, tends to over estimate, per the graph, whereas linear regression underestimates. Due to the nature of this problem, it may be better to veer on the side 
+
+
+
+## Final Forecast
+
+
+### North America
+
+```{r}
+na.fin.ts <- ts(na.temps$AverageTemperature, start = c(1900,1), frequency = 12)
+na.fin.hw <- ets(na.fin.ts, model = "ANA", alpha = 0.2)
+
+na.fin.pred <- forecast(na.fin.hw, h = 12 * 75)
+na.fin.pred
+```
+
+
+```{r}
+autoplot(na.fin.pred, ylab = "Temperature", main = "North America 75 year Forecast")+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+
+
+```{r}
+autoplot(na.fin.pred, ylab = "Temperature", main = "North America 25 year Forecast")+
+  xlim(2013,2038)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+```{r}
+autoplot(na.fin.pred, ylab = "Temperature", main = "North America 50 year Forecast")+
+  xlim(2013,2063)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+```{r}
+autoplot(na.fin.pred, ylab = "Temperature", main = "North America 75 year Forecast")+
+  xlim(2013,2088)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+### Europe
+
+```{r}
+eu.fin.ts <- ts(eu.temps$AverageTemperature, start = c(1900,1), frequency = 12)
+eu.fin.hw <- ets(eu.fin.ts, model = "AAA", alpha = 0.2)
+
+eu.fin.pred <- forecast(eu.fin.hw, h = 12 * 75)
+eu.fin.pred
+```
+
+```{r}
+autoplot(eu.fin.pred, ylab = "Temperature", main = "Europe 75 year Forecast")+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+
+```{r}
+autoplot(eu.fin.pred, ylab = "Temperature", main = "Europe 25 year Forecast")+
+  xlim(2013,2038)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+```{r}
+autoplot(eu.fin.pred, ylab = "Temperature", main = "Europe 50 year Forecast")+
+  xlim(2013,2063)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+```{r}
+autoplot(eu.fin.pred, ylab = "Temperature", main = "Europe 75 year Forecast")+
+  xlim(2013,2088)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+### South America
+
+```{r}
+sa.fin.ts <- ts(sa.temps$AverageTemperature, start = c(1900,1), frequency = 12)
+sa.fin.hw <- ets(sa.fin.ts, model = "ANA", alpha = 0.2)
+
+sa.fin.pred <- forecast(sa.fin.hw, h = 12 * 75)
+sa.fin.pred
+```
+
+
+```{r}
+autoplot(sa.fin.pred, ylab = "Temperature", main = "South America 75 year Forecast")+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+
+
+```{r}
+autoplot(sa.fin.pred, ylab = "Temperature", main = "South America 25 year Forecast")+
+  xlim(2013,2038)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+```{r}
+autoplot(sa.fin.pred, ylab = "Temperature", main = "South America 50 year Forecast")+
+  xlim(2013,2063)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+```{r}
+autoplot(sa.fin.pred, ylab = "Temperature", main = "South America 75 year Forecast")+
+  xlim(2013,2088)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+### Africa
+
+```{r}
+af.fin.ts <- ts(af.temps$AverageTemperature, start = c(1900,1), frequency = 12)
+af.fin.hw <- ets(af.fin.ts, model = "ANA", alpha = 0.2)
+
+af.fin.pred <- forecast(af.fin.hw, h = 12 * 75)
+af.fin.pred
+```
+
+
+
+```{r}
+autoplot(af.fin.pred, ylab = "Temperature", main = "Africa 75 year Forecast")+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+
+```{r}
+autoplot(af.fin.pred, ylab = "Temperature", main = "Africa 25 year Forecast")+
+  xlim(2013,2038)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+```{r}
+autoplot(af.fin.pred, ylab = "Temperature", main = "Africa 50 year Forecast")+
+  xlim(2013,2063)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+```{r}
+autoplot(af.fin.pred, ylab = "Temperature", main = "Africa 75 year Forecast")+
+  xlim(2013,2088)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+### Asia
+
+```{r}
+as.fin.ts <- ts(as.temps$AverageTemperature, start = c(1900,1), frequency = 12)
+as.fin.hw <- ets(as.fin.ts, model = "ANA", alpha = 0.2)
+
+as.fin.pred <- forecast(as.fin.hw, h = 12 * 75)
+as.fin.pred
+```
+
+
+```{r}
+autoplot(as.fin.pred, ylab = "Temperature", main = "Asia 75 year Forecast")+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+
+```{r}
+autoplot(as.fin.pred, ylab = "Temperature", main = "Asia 25 year Forecast")+
+  xlim(2013,2038)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+```{r}
+autoplot(as.fin.pred, ylab = "Temperature", main = "Asia 50 year Forecast")+
+  xlim(2013,2063)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+```{r}
+autoplot(as.fin.pred, ylab = "Temperature", main = "Asia 75 year Forecast")+
+  xlim(2013,2088)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+### Australia
+
+```{r}
+au.fin.ts <- ts(au.temps$AverageTemperature, start = c(1900,1), frequency = 12)
+au.fin.hw <- ets(au.fin.ts, model = "ANA", alpha = 0.2)
+
+au.fin.pred <- forecast(au.fin.hw, h = 12 * 75)
+au.fin.pred
+```
+
+
+```{r}
+autoplot(au.fin.pred, ylab = "Temperature", main = "Australia 75 year Forecast")+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+```{r}
+autoplot(au.fin.pred, ylab = "Temperature", main = "Australia 25 year Forecast")+
+  xlim(2013,2038)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+```{r}
+autoplot(au.fin.pred, ylab = "Temperature", main = "Australia 50 year Forecast")+
+  xlim(2013,2063)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+```{r}
+autoplot(au.fin.pred, ylab = "Temperature", main = "Australia 75 year Forecast")+
+  xlim(2013,2088)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
