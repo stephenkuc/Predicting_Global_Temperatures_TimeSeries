@@ -21,15 +21,6 @@ library(ggplot2)
 ## Data Preprocessing
 
 ```{r}
-land.temps <- read.csv('GlobalLandTemperaturesByCountry.csv')
-head(land.temps)
-land.temps$dt <- as.Date(land.temps$dt)
-head(land.temps)
-```
-
-### Data Partitioning
-
-```{r}
 # North America Creation
 NA.temps <- as.data.frame(land.temps[land.temps$Country == 'North America',])
 rownames(NA.temps) <- 1:nrow(NA.temps)
@@ -37,7 +28,6 @@ na.temps <- NA.temps[1577:2940,]
 rownames(na.temps) <- 1:nrow(na.temps)
 train.na.temps <- na.temps[1:1236,]
 val.na.temps <- na.temps[1237:1364,]
-
 # South america
 SA.temps <- land.temps[land.temps$Country == 'South America',]
 rownames(SA.temps) <- 1:nrow(SA.temps)
@@ -45,7 +35,6 @@ sa.temps <- SA.temps[589:1952,]
 rownames(sa.temps) <- 1:nrow(sa.temps)
 train.sa.temps <- sa.temps[1:1236,]
 val.sa.temps <- sa.temps[1237:1364,]
-
 # Africa
 AF.temps <- land.temps[land.temps$Country == 'Africa',]
 rownames(AF.temps) <- 1:nrow(AF.temps)
@@ -53,8 +42,6 @@ af.temps <- AF.temps[601:1964,]
 rownames(af.temps) <- 1:nrow(af.temps)
 train.af.temps <- af.temps[1:1236,]
 val.af.temps <- af.temps[1237:1364,]
-
-
 # Europe
 EU.temps <- land.temps[land.temps$Country == 'Europe',]
 rownames(EU.temps) <- 1:nrow(EU.temps)
@@ -62,7 +49,6 @@ eu.temps <- EU.temps[1875:3238,]
 rownames(eu.temps) <- 1:nrow(eu.temps)
 train.eu.temps <- eu.temps[1:1236,]
 val.eu.temps <- eu.temps[1237:1364,]
-
 # Asia
 AS.temps <- land.temps[land.temps$Country == 'Asia',]
 rownames(AS.temps) <- 1:nrow(AS.temps)
@@ -70,7 +56,6 @@ as.temps <- AS.temps[1006:2369,]
 rownames(as.temps) <- 1:nrow(as.temps)
 train.as.temps <- as.temps[1:1236,]
 val.as.temps <- as.temps[1237:1364,]
-
 # Australia
 AU.temps <- land.temps[land.temps$Country == 'Australia',]
 rownames(AU.temps) <- 1:nrow(AU.temps)
@@ -84,28 +69,22 @@ val.au.temps <- au.temps[1237:1364,]
 
 
 ```{r}
-
 # Splitting into train and test
 # North America
 na.train.ts <- ts(train.na.temps$AverageTemperature, start = c(1900,1), frequency = 12)
 na.val.ts <- ts(val.na.temps$AverageTemperature, start = c(2003,1), frequency = 12)
-
 # South America
 sa.train.ts <- ts(train.sa.temps$AverageTemperature, start = c(1900,1), frequency = 12)
 sa.val.ts <- ts(val.sa.temps$AverageTemperature, start = c(2003,1), frequency = 12)
-
 # Africa
 af.train.ts <- ts(train.af.temps$AverageTemperature, start = c(1900,1), frequency = 12) 
 af.val.ts <- ts(val.af.temps$AverageTemperature, start = c(2003,1), frequency = 12)
-
 # Europe
 eu.train.ts <- ts(train.eu.temps$AverageTemperature, start = c(1900,1), frequency = 12) 
 eu.val.ts <- ts(val.eu.temps$AverageTemperature, start = c(2003,1), frequency = 12)
-
 # Asia
 as.train.ts <- ts(train.as.temps$AverageTemperature, start = c(1900,1), frequency = 12) 
 as.val.ts <- ts(val.as.temps$AverageTemperature, start = c(2003,1), frequency = 12)
-
 # Australia
 au.train.ts <- ts(train.au.temps$AverageTemperature, start = c(1900,1), frequency = 12) 
 au.val.ts <- ts(val.au.temps$AverageTemperature, start = c(2003,1), frequency = 12)
@@ -132,18 +111,14 @@ autoplot(na.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
 
 ```{r}
 # Further EDA into North American Time Series
-
 autoplot(diff(na.train.ts))
 acf(diff(diff(na.train.ts, lag = 12), lag = 1), main = '')
 title('Autocorrelation of differenced NA Ts')
 acf(na.train.ts, main = '')
 title('Autocorrelation of NA TS')
-
 # stl() function to see seasonal, trend, and irregular components
 na.stl <- stl(na.train.ts, s.window = 'periodic')
 plot(na.stl)
-
-
 ```
 
 ### South America
@@ -164,13 +139,11 @@ autoplot(sa.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
 
 ```{r}
 # Further EDA into South American Time Series
-
 autoplot(diff(sa.train.ts))
 acf(diff(diff(sa.train.ts, lag = 12), lag = 1), main = '')
 title('Autocorrelation of differenced SA Ts')
 acf(sa.train.ts, main = '')
 title('Autocorrelation of SA TS')
-
 # stl() function to see seasonal, trend, and irregular components
 sa.stl <- stl(sa.train.ts, s.window = 'periodic')
 plot(sa.stl)
@@ -182,7 +155,6 @@ plot(sa.stl)
 
 ```{r}
 # Africa Data
-
 autoplot(af.train.ts, xlab = 'Year', ylab = 'Average Temperature', bty = 'l', ylim = c(-20, 40))+
   labs(title = "AF Surface Temperature Time Series") +
   scale_y_continuous(limits = c(-20,40), breaks = c(seq(-20,40,10))) +
@@ -192,14 +164,10 @@ autoplot(af.train.ts, xlab = 'Year', ylab = 'Average Temperature', bty = 'l', yl
         axis.ticks.y = element_blank(),
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-
-
-
 ```
 
 ```{r}
 # Further EDA of Africa Data
-
 autoplot(diff(af.train.ts))
 acf(diff(diff(af.train.ts, lag = 12), lag = 1), main = '')
 title('Autocorrelation of difference AF TS')
@@ -215,7 +183,6 @@ plot(af.stl)
 
 ```{r}
 # Europe
-
 autoplot(eu.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
   labs(title = "EU Surface Temperature Time Series") +
   scale_y_continuous(limits = c(-20,40), breaks = c(seq(-20,40,10))) +
@@ -228,18 +195,14 @@ autoplot(eu.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
 ```
 ```{r}
 # Further EDA into European Time Series
-
 autoplot(diff(eu.train.ts))
 acf(diff(diff(eu.train.ts, lag = 12), lag = 1), main = '')
 title('Autocorrelation of differenced EU Ts')
 acf(eu.train.ts, main = '')
 title('Autocorrelation of EU TS')
-
 # stl() function to see seasonal, trend, and irregular components
 eu.stl <- stl(eu.train.ts, s.window = 'periodic')
 plot(eu.stl)
-
-
 ```
 
 
@@ -248,7 +211,6 @@ plot(eu.stl)
 
 ```{r}
 # Asia
-
 autoplot(as.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
   labs(title = "AS Surface Temperature Time Series") +
   scale_y_continuous(limits = c(-20,40), breaks = c(seq(-20,40,10))) +
@@ -261,20 +223,15 @@ autoplot(as.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
 ```
 
 ```{r}
-
 # Further EDA into Asia Time Series
-
 autoplot(diff(as.train.ts))
 acf(diff(diff(as.train.ts, lag = 12), lag = 1), main = '')
 title('Autocorrelation of differenced Asia Ts')
 acf(as.train.ts, main = '')
 title('Autocorrelation of Asia TS')
-
 # stl() function to see seasonal, trend, and irregular components
 as.stl <- stl(as.train.ts, s.window = 'periodic')
 plot(as.stl)
-
-
 ```
 
 
@@ -284,7 +241,6 @@ plot(as.stl)
 
 ```{r}
 # Australia
-
 autoplot(au.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
   labs(title = "AU Surface Temperature Time Series") +
   scale_y_continuous(limits = c(-20,40), breaks = c(seq(-20,40,10))) +
@@ -298,17 +254,14 @@ autoplot(au.train.ts, xlab = 'Time', ylab = 'Average Temperature') +
 
 ```{r}
 # Further EDA into Australia Time Series
-
 autoplot(diff(diff(diff(diff(au.train.ts)))))
 acf(diff(diff(diff(diff(au.train.ts)))), main = '')
 title('Autocorrelation of differenced Australia Ts')
 acf(au.train.ts, main = '')
 title('Autocorrelation of Australia TS')
-
 # stl() function to see seasonal, trend, and irregular components
 au.stl <- stl(au.train.ts, s.window = 'periodic')
 plot(au.stl)
-
 ```
 
 Some takeaways here are that all continents have some upward trend of temperature. Seasonality is strong from the ACF plots with high positive correlations every 12 months / with strong negative correlations every 6 months. 
@@ -329,31 +282,29 @@ NA.hw <- ets(na.train.ts, model = "ZZZ", alpha = .2, restrict = FALSE,
 NA.hwpred <- forecast(NA.hw, h = length(na.val.ts))
 summary(NA.hw)
 
-NA.ma <- rollmean(na.train.ts, k = 12, align = 'right')
 
+NA.ma <- rollmean(na.train.ts, k = 12, align = 'right')
 plot(na.train.ts, ylab = "Temperature", xlab = "Year", bty = "l",  xaxt = "n", 
      main = "North America Temperature with Holt-Winter's and Moving Average")
 axis(side = 1, at = seq(1900, 2000, 10), labels = format(seq(1900, 2000, 10)))
 lines(NA.hw$fitted, col = "blue")
 lines(NA.ma, col = "red")
 ```
+
+There is a slight upward trend in North America temperature based on the moving average plot. The Holt-Winter method appears to give a solid fit to this training set, and this will serve as a strong base model.
+
 #### Linear Model
-
-
 
 ```{r}
 ### NA linear model with seasonality and trend 
 na.lm <- tslm(na.train.ts ~ trend + season)
 nalm.pred <- forecast(na.lm, h = length(na.val.ts))
-
 summary(na.lm)
-
-
 nalm.pred.df <- data.frame(Date = val.na.temps$dt,
                            Forecast = nalm.pred$mean,
                            True = na.val.ts)
 ```
-
+Predictably, as seasons work and as we saw in the ACF plots from earlier, it appears seasons 4 and 11 have the largest impact on the current season's temperature, based on the coefficients of the linear model.
 
 
 #### Neural Network
@@ -362,8 +313,6 @@ nalm.pred.df <- data.frame(Date = val.na.temps$dt,
 ```{r}
 #Neural network (nnetar)
 na.nn <- nnetar(na.train.ts,linout = TRUE)
-
-
 na_nn.pred <- forecast(na.nn, h = length(na.val.ts))
 summary(na_nn.pred)
 ```
@@ -380,6 +329,7 @@ lines(na.val.ts)
 
 ```{r}
 autoplot(na.train.ts, ylab = "Temperature", main = "North America Training Comparison")+
+  autolayer(NA.hw$fitted) +
   autolayer(na_nn.pred$fitted)+
   autolayer(nalm.pred$fitted)+
   scale_color_discrete(label = c("Holt-Winter","Neural Network","Linear Regression"))+
@@ -389,7 +339,6 @@ autoplot(na.train.ts, ylab = "Temperature", main = "North America Training Compa
         axis.ticks.y = element_blank(),
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-
 autoplot(na.val.ts, ylab = "Temperature", main = "North America Validation Comparison")+
   autolayer(na_nn.pred$mean)+
   autolayer(nalm.pred$mean)+
@@ -403,16 +352,16 @@ autoplot(na.val.ts, ylab = "Temperature", main = "North America Validation Compa
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
+All models performed similarly. The linear regression model seems to have its predictions take a smaller range in the training set, and it seems to still fit the validation set well. However, it tends to underestimate high temperatures at times, whereas the holt-winters method tends to overestimate. 
+
 #### North America Model Metrics
 
 ```{r}
-print("Holt-Winter Train and Test Set Metrics: ")
+print("Holt-Winter Train and Test Set Metrics for North America: ")
 accuracy(NA.hwpred, na.val.ts)
-
-print("Linear Regression Train and Test Set Metrics: ")
+print("Linear Regression Train and Test Set Metrics for North America: ")
 accuracy(nalm.pred, na.val.ts)
-
-print("Neural Network Train and Test Set Metrics: ")
+print("Neural Network Train and Test Set Metrics for North America: ")
 accuracy(na_nn.pred, na.val.ts)
 ```
 
@@ -428,15 +377,14 @@ EU.hw <- ets(eu.train.ts, model = "ZZZ", alpha = .2, restrict = FALSE,
              allow.multiplicative.trend = TRUE)
 EU.hwpred <- forecast(EU.hw, h = length(eu.val.ts))
 summary(EU.hw)
-
 EU.ma <- rollmean(eu.train.ts, k = 12, align = 'right')
-
 plot(eu.train.ts, ylab = "Temperature", xlab = "Year", bty = "l",  xaxt = "n", 
      main = "Europe Temperature with Holt-Winter's and Moving Average")
 axis(side = 1, at = seq(1900, 2000, 10), labels = format(seq(1900, 2000, 10)))
 lines(EU.hw$fitted, col = "blue")
 lines(EU.ma, col = "red")
 ```
+There appears to be a very slight, if anything, upward trend on Europe's data. The Holt-Winter method gives a decent fit to the training set, and seems to be a good starting point.
 
 #### Linear Regression Model
 
@@ -449,7 +397,7 @@ eulm.pred.df <- data.frame(Date = val.eu.temps$dt,
                            Forecast = eulm.pred$mean,
                            True = eu.val.ts)
 ```
-
+Some of these coefficients make a ton of sense when seeing the ACF charts -- like seasonality with seasons 4 and 11 getting a large coefficient.
 
 #### Neural Network
 
@@ -457,8 +405,6 @@ eulm.pred.df <- data.frame(Date = val.eu.temps$dt,
 ```{r}
 #Neural network (nnetar)
 eu.nn <- nnetar(eu.train.ts, linout = TRUE)
-
-
 eu_nn.pred <- forecast(eu.nn, h = length(eu.val.ts))
 summary(eu_nn.pred)
 ```
@@ -488,7 +434,6 @@ autoplot(eu.train.ts, ylab = "Temperature", main = "Europe Training Comparison")
         axis.ticks.y = element_blank(),
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-
 autoplot(eu.val.ts, ylab = "Temperature", main = "Europe Validation Comparison")+
   autolayer(eu_nn.pred$mean)+
   autolayer(eulm.pred$mean)+
@@ -505,13 +450,11 @@ autoplot(eu.val.ts, ylab = "Temperature", main = "Europe Validation Comparison")
 #### Europe Modeling Metrics
 
 ```{r}
-print("Holt-Winter Train and Test Set Metrics: ")
+print("Holt-Winter Train and Test Set Metrics for Europe: ")
 accuracy(EU.hwpred, eu.val.ts)
-
-print("Linear Regression Train and Test Set Metrics: ")
+print("Linear Regression Train and Test Set Metrics for Europe: ")
 accuracy(eulm.pred, eu.val.ts)
-
-print("Neural Network Train and Test Set Metrics: ")
+print("Neural Network Train and Test Set Metrics for Europe: ")
 accuracy(eu_nn.pred, eu.val.ts)
 ```
 
@@ -527,9 +470,7 @@ SA.hw <- ets(sa.train.ts, model = "ZZZ", alpha = .2, restrict = FALSE,
              allow.multiplicative.trend = TRUE)
 SA.hwpred <- forecast(SA.hw, h = length(sa.val.ts))
 summary(SA.hw)
-
 SA.ma <- rollmean(sa.train.ts, k = 12, align = 'right')
-
 plot(sa.train.ts, ylab = "Temperature", xlab = "Year", bty = "l",  xaxt = "n",
      main = "South America Temperature with Holt-Winter's and Moving Average")
 axis(side = 1, at = seq(1900, 2000, 10), labels = format(seq(1900, 2000, 10)))
@@ -537,6 +478,7 @@ lines(SA.hw$fitted, col = "blue")
 lines(SA.ma, col = "red")
 ```
 
+There is an obvious upward trend with the moving average line. The Holt-Winters method seems to have a good fit with this, as well.
 
 #### Linear Regression Model
 
@@ -546,8 +488,6 @@ lines(SA.ma, col = "red")
 sa.lm <- tslm(sa.train.ts ~ trend + season)
 salm.pred <- forecast(sa.lm, h = length(sa.val.ts))
 summary(sa.lm)
-
-
 salm.pred.df <- data.frame(Date = val.sa.temps$dt,
                            Forecast = salm.pred$mean,
                            True = sa.val.ts)
@@ -560,8 +500,6 @@ salm.pred.df <- data.frame(Date = val.sa.temps$dt,
 ```{r}
 #Neural network (nnetar)
 sa.nn <- nnetar(sa.train.ts,linout = TRUE)
-
-
 sa_nn.pred <- forecast(sa.nn, h = length(sa.val.ts))
 summary(sa_nn.pred)
 ```
@@ -579,10 +517,12 @@ lines(sa.val.ts)
 
 
 ```{r}
+# plotting training set
 autoplot(sa.train.ts, ylab = "Temperature", main = "South America Training Comparison")+
   autolayer(sa_nn.pred$fitted)+
   autolayer(salm.pred$fitted)+
-  scale_color_discrete(label = c("Neural Network","Linear Regression"))+
+  autolayer(SA.hw$fitted) +
+  scale_color_discrete(label = c("Neural Network","Linear Regression", "Holt-Winters"))+
   theme(axis.text.x = element_text(vjust = 0.7, size = 8),
         plot.title = element_text(hjust = 0.5),
         panel.background = element_blank(),
@@ -590,7 +530,8 @@ autoplot(sa.train.ts, ylab = "Temperature", main = "South America Training Compa
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 
-autoplot(sa.val.ts, ylab = "Temperature", main = "South America Validation Comparison")+
+# plotting validation set
+autoplot(sa.val.ts, series = "actual", ylab = "Temperature", main = "South America Validation Comparison")+
   autolayer(sa_nn.pred$mean)+
   autolayer(salm.pred$mean)+
   autolayer(SA.hwpred$mean)+
@@ -602,42 +543,40 @@ autoplot(sa.val.ts, ylab = "Temperature", main = "South America Validation Compa
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
+It seems that each model fits the data decently well, and each have comparable results from this graph. Linear regression tends to be closer on the extreme values, and neural networks tend to have a smaller range of prediction. Holt-winters is somewhere in between, it appears. 
+
 
 #### South America Model Metrics
 
 ```{r}
-print("Holt-Winter Train and Test Set Metrics: ")
+print("Holt-Winter Train and Test Set Metrics for South America: ")
 accuracy(SA.hwpred, sa.val.ts)
-
-print("Linear Regression Train and Test Set Metrics: ")
+print("Linear Regression Train and Test Set Metrics for South America: ")
 accuracy(salm.pred, sa.val.ts)
-
-print("Neural Network Train and Test Set Metrics: ")
+print("Neural Network Train and Test Set Metrics for South America: ")
 accuracy(sa_nn.pred, sa.val.ts)
 ```
-
+Interestingly, the linear regression performed even better, by RMSE, on the validation set than the training set. Still, the results were very comparable to Holt-Winters, which had a better training set RMSE. Neural network's RMSE more than doubled from training set to test set, which seems it may have slightly overfit.
 
 ### Africa
 
 #### Holt-Winter Model
 
-
-
 ```{r}
 # Africa
-
 AF.hw <- ets(af.train.ts, model = "ZZZ", alpha = .2, restrict = FALSE, 
              allow.multiplicative.trend = TRUE)
 AF.hwpred <- forecast(AF.hw, h = length(af.val.ts))
+
 summary(AF.hw)
 
 AF.ma <- rollmean(af.train.ts, k = 12, align = 'right')
-
-plot(af.train.ts, ylab = "Temperature", xlab = "Year", bty = "l",  xaxt = "n", main = "Africa Temperature with Holt-Winter's and Moving Average", flty = 2)
+plot(af.train.ts, ylab = "Temperature", xlab = "Year", bty = "l",  xaxt = "n", main = "Africa Temperature with Holt-Winter's and Moving Average")
 axis(side = 1, at = seq(1900, 2000, 10), labels = format(seq(1900, 2000, 10)))
 lines(AF.hw$fitted, col = "blue")
 lines(AF.ma, col = "red")
 ```
+The moving average plot shows the upward trend of Africa's temperature over the past 100 years. It also appears that the Holt-Winter's model captures the training set decently well, with the large misses for colder temperatures. 
 
 ### Linear Regression Model
 
@@ -646,8 +585,6 @@ lines(AF.ma, col = "red")
 af.lm <- tslm(af.train.ts ~ trend + season)
 aflm.pred <- forecast(af.lm, h = length(af.val.ts))
 summary(af.lm)
-
-
 aflm.pred.df <- data.frame(Date = val.af.temps$dt,
                            Forecast = aflm.pred$mean,
                            True = af.val.ts)
@@ -660,8 +597,6 @@ aflm.pred.df <- data.frame(Date = val.af.temps$dt,
 ```{r}
 #Neural network (nnetar)
 af.nn <- nnetar(af.train.ts,linout = TRUE)
-
-
 af_nn.pred <- forecast(af.nn, h = length(af.val.ts))
 summary(af_nn.pred)
 ```
@@ -690,7 +625,6 @@ autoplot(af.train.ts, ylab = "Temperature", main = "Africa Training Comparison")
         axis.ticks.y = element_blank(),
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-
 autoplot(af.val.ts, ylab = "Temperature", main = "Africa Validation Comparison")+
   autolayer(af_nn.pred$mean)+
   autolayer(aflm.pred$mean)+
@@ -704,19 +638,19 @@ autoplot(af.val.ts, ylab = "Temperature", main = "Africa Validation Comparison")
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
+It's hard to determine which model gave the best results -- they all seem relatively even.
+
 #### Africa Modeling Metrics
 
 ```{r}
-print("Holt-Winter Train and Test Set Metrics: ")
+print("Holt-Winter Train and Test Set Metrics for Africa: ")
 accuracy(AF.hwpred, af.val.ts)
-
-print("Linear Regression Train and Test Set Metrics: ")
+print("Linear Regression Train and Test Set Metrics for Africa: ")
 accuracy(aflm.pred, af.val.ts)
-
-print("Neural Network Train and Test Set Metrics: ")
+print("Neural Network Train and Test Set Metrics for Africa:")
 accuracy(af_nn.pred, af.val.ts)
 ```
-
+It appears that the Holt-Winter's model produced the overall best results for Africa. The validation set had the best RMSE. While it's training set didn't have the best RMSE, it seemed to have generalize and predict better, which is the goal for the forecasting. 
 
 ### Asia
 
@@ -725,21 +659,18 @@ accuracy(af_nn.pred, af.val.ts)
 
 ```{r}
 # Asia
-
 AS.hw <- ets(as.train.ts, model = "ZZZ", alpha = .2, restrict = FALSE, 
              allow.multiplicative.trend = TRUE)
 AS.hwpred <- forecast(AS.hw, h = length(as.val.ts))
 summary(AS.hw)
-
 AS.ma <- rollmean(as.train.ts, k = 12, align = 'right')
-
-plot(as.train.ts, ylab = "Temperature", xlab = "Year", bty = "l",  xaxt = "n", main = "Asia Temperature with Holt-Winter's and Moving Average", flty = 2)
+plot(as.train.ts, ylab = "Temperature", xlab = "Year", bty = "l",  xaxt = "n", main = "Asia Temperature with Holt-Winter's and Moving Average")
 axis(side = 1, at = seq(1900, 2000, 10), labels = format(seq(1900, 2000, 10)))
 lines(AS.hw$fitted, col = "blue")
 lines(AS.ma, col = "red")
 ```
 
-
+Seeing the moving average line, it is hard to determine if there is a definitive upward trend. The Holt-Winter method, though, seems to fit this fairly well again.
 
 #### Linear Regression Model 
 
@@ -749,8 +680,6 @@ lines(AS.ma, col = "red")
 as.lm <- tslm(as.train.ts ~ trend + season)
 aslm.pred <- forecast(as.lm, h = length(as.val.ts))
 summary(as.lm)
-
-
 aslm.pred.df <- data.frame(Date = val.as.temps$dt,
                            Forecast = aslm.pred$mean,
                            True = as.val.ts)
@@ -764,8 +693,6 @@ aslm.pred.df <- data.frame(Date = val.as.temps$dt,
 ```{r}
 #Neural network (nnetar)
 as.nn <- nnetar(as.train.ts,linout = TRUE)
-
-
 as_nn.pred <- forecast(as.nn, h = length(as.val.ts))
 summary(as_nn.pred)
 ```
@@ -793,7 +720,6 @@ autoplot(as.train.ts, ylab = "Temperature", main = "Asia Training Comparison")+
         axis.ticks.y = element_blank(),
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-
 autoplot(as.val.ts, ylab = "Temperature", main = "Asia Validation Comparison")+
   autolayer(as_nn.pred$mean)+
   autolayer(aslm.pred$mean)+
@@ -811,13 +737,11 @@ autoplot(as.val.ts, ylab = "Temperature", main = "Asia Validation Comparison")+
 #### Asia Model Metrics
 
 ```{r}
-print("Holt-Winter Train and Test Set Metrics: ")
+print("Holt-Winter Train and Test Set Metrics for Asia: ")
 accuracy(AS.hwpred, as.val.ts)
-
-print("Linear Regression Train and Test Set Metrics: ")
+print("Linear Regression Train and Test Set Metrics for Asia: ")
 accuracy(aslm.pred, as.val.ts)
-
-print("Neural Network Train and Test Set Metrics: ")
+print("Neural Network Train and Test Set Metrics for Asia: ")
 accuracy(as_nn.pred, as.val.ts)
 ```
 
@@ -833,9 +757,7 @@ AU.hw <- ets(au.train.ts, model = "ZZZ", alpha = .2, restrict = FALSE,
              allow.multiplicative.trend = TRUE)
 AU.hwpred <- forecast(AU.hw, h = length(au.val.ts))
 summary(AU.hw)
-
 AU.ma <- rollmean(au.train.ts, k = 12, align = 'right')
-
 plot(au.train.ts, ylab = "Temperature", xlab = "Year", bty = "l",  xaxt = "n", 
      main = "Australia Temperature with Holt-Winter's and Moving Average", flty = 2)
 axis(side = 1, at = seq(1900, 2000, 10), labels = format(seq(1900, 2000, 10)))
@@ -843,6 +765,7 @@ lines(AU.hw$fitted, col = "blue")
 lines(AU.ma, col = "red")
 ```
 
+The moving average plot here shows a slight upward trend for Australia temperature over the last 100 years. The Holt-Winter method appears to have fit decently well, but not quite predicting some of the extreme temperatures (both high and low). It may generalize better, though, because of this.
 
 #### Linear Regression Model
 
@@ -852,12 +775,9 @@ lines(AU.ma, col = "red")
 au.lm <- tslm(au.train.ts ~ trend + season)
 aulm.pred <- forecast(au.lm, h = length(au.val.ts))
 summary(au.lm)
-
-
 aulm.pred.df <- data.frame(Date = val.au.temps$dt,
                            Forecast = aulm.pred$mean,
                            True = au.val.ts)
-
 ```
 
 
@@ -867,8 +787,6 @@ aulm.pred.df <- data.frame(Date = val.au.temps$dt,
 ```{r}
 #Neural network (nnetar)
 au.nn <- nnetar(au.train.ts,linout = TRUE)
-
-
 nn.pred <- forecast(au.nn, h = length(au.val.ts))
 summary(nn.pred)
 ```
@@ -876,13 +794,12 @@ summary(nn.pred)
 #### Australia Modeling Plots
 
 ```{r}
-plot(au.train.ts, ylim = c(13, 30), xlim = c(2003,2014), ylab = "Temperature")
+plot(au.train.ts, ylim = c(13, 30), xlim = c(2000,2014), ylab = "Temperature")
 lines(nn.pred$fitted, lwd = 2, col = "red")
 lines(aulm.pred$fitted, lwd = 2, col = "yellow")
 lines(nn.pred$mean, lwd = 2, col = "blue", lty = 2)
 lines(aulm.pred$mean, lwd = 2, col = "green", lty = 2)
 lines(au.val.ts)
-
 ```
 
 ```{r}
@@ -896,7 +813,6 @@ autoplot(au.train.ts, ylab = "Temperature", main = "Australia Training Compariso
         axis.ticks.y = element_blank(),
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-
 autoplot(au.val.ts, ylab = "Temperature", main = "Australia Validation Comparison")+
   autolayer(nn.pred$mean)+
   autolayer(aulm.pred$mean)+
@@ -910,17 +826,17 @@ autoplot(au.val.ts, ylab = "Temperature", main = "Australia Validation Compariso
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
+Similar to the other continents thus far, the results seem pretty comparable for each. Some tend to overestimate at times, like the Holt-Winters around year 2007, and some underestimate like Linear Regression near most of the peaks. 
+
 #### Australia Modeling Metrics
 
 ```{r}
-print("Holt-Winter Train and Test Set Metrics: ")
+print("Holt-Winter Train and Test Set Metrics for Australia: ")
 accuracy(AU.hwpred, au.val.ts)
-
-print("Linear Regression Train and Test Set Metrics: ")
+print("Linear Regression Train and Test Set Metrics for Australia: ")
 accuracy(aulm.pred, au.val.ts)
-
-print("Neural Network Train and Test Set Metrics: ")
+print("Neural Network Train and Test Set Metrics for Australia: ")
 accuracy(nn.pred, au.val.ts)
 ```
 
-
+The Linear regression and Holt-Winters results were nearly identical. While the linear regression had the worst training set RMSE, it had the best validation set RMSE. Holt-Winters, though, tends to over estimate, per the graph, whereas linear regression underestimates. Due to the nature of this problem, it may be better to veer on the side 
