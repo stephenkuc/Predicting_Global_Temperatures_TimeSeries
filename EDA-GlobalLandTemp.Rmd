@@ -18,6 +18,15 @@ library(zoo)
 library(ggplot2)
 ```
 
+## Loading Data
+
+```{r}
+land.temps <- read.csv('GlobalLandTemperaturesByCountry.csv')
+head(land.temps)
+land.temps$dt <- as.Date(land.temps$dt)
+land.temps
+```
+
 ## Data Preprocessing
 
 ```{r}
