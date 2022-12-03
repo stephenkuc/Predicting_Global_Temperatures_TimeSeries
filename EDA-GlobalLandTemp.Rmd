@@ -914,6 +914,27 @@ autoplot(na.fin.pred, ylab = "Temperature", main = "North America 75 year Foreca
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
+# training Linear reg on North America
+
+```{r}
+
+### NA linear model with seasonality and trend 
+na.lm.fin <- tslm(na.fin.ts ~ trend + season)
+nalm.fin.pred <- forecast(na.lm.fin, h = 12*75)
+
+
+
+```
+
+```{r}
+autoplot(nalm.fin.pred, ylab = "Temperature", main = "North America 75 year Forecast")+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
 
 ### Europe
 
@@ -963,6 +984,28 @@ autoplot(eu.fin.pred, ylab = "Temperature", main = "Europe 50 year Forecast")+
 ```{r}
 autoplot(eu.fin.pred, ylab = "Temperature", main = "Europe 75 year Forecast")+
   xlim(2013,2088)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+# training Linear reg on Europe
+
+```{r}
+
+### EU linear model with seasonality and trend 
+eu.lm.fin <- tslm(eu.fin.ts ~ trend + season)
+eulm.fin.pred <- forecast(eu.lm.fin, h = 12*75)
+
+
+
+```
+
+```{r}
+autoplot(eulm.fin.pred, ylab = "Temperature", main = "Europe 75 year Forecast")+
   theme(axis.text.x = element_text(vjust = 0.7, size = 8),
         plot.title = element_text(hjust = 0.5),
         panel.background = element_blank(),
@@ -1021,6 +1064,27 @@ autoplot(sa.fin.pred, ylab = "Temperature", main = "South America 50 year Foreca
 ```{r}
 autoplot(sa.fin.pred, ylab = "Temperature", main = "South America 75 year Forecast")+
   xlim(2013,2088)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+# South America Final -- Linear
+
+```{r}
+
+### SA linear model with seasonality and trend 
+sa.lm.fin <- tslm(sa.fin.ts ~ trend + season)
+salm.fin.pred <- forecast(sa.lm.fin, h = 12*75)
+
+
+
+```
+
+```{r}
+autoplot(salm.fin.pred, ylab = "Temperature", main = "South America 75 year Forecast")+
   theme(axis.text.x = element_text(vjust = 0.7, size = 8),
         plot.title = element_text(hjust = 0.5),
         panel.background = element_blank(),
@@ -1088,6 +1152,29 @@ autoplot(af.fin.pred, ylab = "Temperature", main = "Africa 75 year Forecast")+
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
+
+# Africa Final -- Linear
+
+```{r}
+
+### Africa linear model with seasonality and trend 
+af.lm.fin <- tslm(af.fin.ts ~ trend + season)
+aflm.fin.pred <- forecast(af.lm.fin, h = 12*75)
+
+
+
+```
+
+```{r}
+autoplot(aflm.fin.pred, ylab = "Temperature", main = "Africa 75 year Forecast")+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
 ### Asia
 
 ```{r}
@@ -1144,7 +1231,27 @@ autoplot(as.fin.pred, ylab = "Temperature", main = "Asia 75 year Forecast")+
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
+# Asia Final -- Linear
 
+```{r}
+
+### Asia linear model with seasonality and trend 
+as.lm.fin <- tslm(as.fin.ts ~ trend + season)
+aslm.fin.pred <- forecast(as.lm.fin, h = 12*75)
+
+
+
+```
+
+```{r}
+autoplot(aslm.fin.pred, ylab = "Temperature", main = "Asia 75 year Forecast")+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
 
 ### Australia
 
@@ -1201,3 +1308,36 @@ autoplot(au.fin.pred, ylab = "Temperature", main = "Australia 75 year Forecast")
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
+# Australia Final -- Linear
+
+```{r}
+
+### AU linear model with seasonality and trend 
+au.lm.fin <- tslm(au.fin.ts ~ trend + season)
+aulm.fin.pred <- forecast(au.lm.fin, h = 12*75)
+
+
+
+```
+
+```{r}
+autoplot(aulm.fin.pred, ylab = "Temperature", main = "Australia 75 year Forecast")+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+
+### Plotting all final forecasts (Linear Regression)
+
+```{r}
+autoplot(aulm.fin.pred, ylab = "Temperature", series = "Australia") + autolayer(aslm.fin.pred, series = "Asia") + autolayer(aflm.fin.pred, series = "Africa") +
+  autolayer(salm.fin.pred, series = "South America") + autolayer(eulm.fin.pred, series = "Europe") + autolayer(nalm.fin.pred, series = "North America") + xlim(2010, 2075)
+
+
+
+```
