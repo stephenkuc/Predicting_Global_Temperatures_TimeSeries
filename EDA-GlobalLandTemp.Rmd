@@ -936,6 +936,43 @@ autoplot(nalm.fin.pred, ylab = "Temperature", main = "North America 75 year Fore
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
+
+```{r}
+autoplot(nalm.fin.pred, ylab = "Temperature", main = "North America 25 year Forecast")+
+  xlim(2013,2038)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+```{r}
+autoplot(nalm.fin.pred, ylab = "Temperature", main = "North America 50 year Forecast")+
+  xlim(2013,2063)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+```{r}
+autoplot(nalm.fin.pred, ylab = "Temperature", main = "North America 75 year Forecast")+
+  xlim(2013,2088)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+
 ### Europe
 
 ```{r}
@@ -1013,6 +1050,42 @@ autoplot(eulm.fin.pred, ylab = "Temperature", main = "Europe 75 year Forecast")+
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
+
+
+```{r}
+autoplot(eulm.fin.pred, ylab = "Temperature", main = "Europe 25 year Forecast")+
+  xlim(2013,2038)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+```{r}
+autoplot(eulm.fin.pred, ylab = "Temperature", main = "Europe 50 year Forecast")+
+  xlim(2013,2063)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+```{r}
+autoplot(eulm.fin.pred, ylab = "Temperature", main = "Europe 75 year Forecast")+
+  xlim(2013,2088)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
 
 ### South America
 
@@ -1092,6 +1165,41 @@ autoplot(salm.fin.pred, ylab = "Temperature", main = "South America 75 year Fore
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
+
+```{r}
+autoplot(salm.fin.pred, ylab = "Temperature", main = "South America 25 year Forecast")+
+  xlim(2013,2038)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+```{r}
+autoplot(salm.fin.pred, ylab = "Temperature", main = "South America 50 year Forecast")+
+  xlim(2013,2063)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+```{r}
+autoplot(salm.fin.pred, ylab = "Temperature", main = "South America 75 year Forecast")+
+  xlim(2013,2088)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
 
 
 ### Africa
@@ -1175,6 +1283,41 @@ autoplot(aflm.fin.pred, ylab = "Temperature", main = "Africa 75 year Forecast")+
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
+```{r}
+autoplot(aflm.fin.pred, ylab = "Temperature", main = "Africa 25 year Forecast")+
+  xlim(2013,2038)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+```{r}
+autoplot(aflm.fin.pred, ylab = "Temperature", main = "Africa 50 year Forecast")+
+  xlim(2013,2063)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+```{r}
+autoplot(aflm.fin.pred, ylab = "Temperature", main = "Africa 75 year Forecast")+
+  xlim(2013,2088)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
 ### Asia
 
 ```{r}
@@ -1252,6 +1395,46 @@ autoplot(aslm.fin.pred, ylab = "Temperature", main = "Asia 75 year Forecast")+
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
+
+
+```{r}
+autoplot(aslm.fin.pred, ylab = "Temperature", main = "Asia 25 year Forecast")+
+  xlim(2013,2038)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+
+```{r}
+autoplot(aslm.fin.pred, ylab = "Temperature", main = "Asia 50 year Forecast")+
+  xlim(2013,2063)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+
+```{r}
+autoplot(aslm.fin.pred, ylab = "Temperature", main = "Asia 75 year Forecast")+
+  xlim(2013,2088)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
 
 ### Australia
 
@@ -1331,13 +1514,95 @@ autoplot(aulm.fin.pred, ylab = "Temperature", main = "Australia 75 year Forecast
 ```
 
 
+```{r}
+autoplot(aulm.fin.pred, ylab = "Temperature", main = "Australia 25 year Forecast")+
+  xlim(2013,2038)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+```{r}
+autoplot(aulm.fin.pred, ylab = "Temperature", main = "Australia 50 year Forecast")+
+  xlim(2013,2063)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+```{r}
+autoplot(aulm.fin.pred, ylab = "Temperature", main = "Australia 75 year Forecast")+
+  xlim(2013,2088)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
 
 ### Plotting all final forecasts (Linear Regression)
 
 ```{r}
-autoplot(aulm.fin.pred, ylab = "Temperature", series = "Australia") + autolayer(aslm.fin.pred, series = "Asia") + autolayer(aflm.fin.pred, series = "Africa") +
-  autolayer(salm.fin.pred, series = "South America") + autolayer(eulm.fin.pred, series = "Europe") + autolayer(nalm.fin.pred, series = "North America") + xlim(2010, 2075)
-
-
+autoplot(aulm.fin.pred, ylab = "Temperature", series = "Australia",
+         main = "First 25 Years Forecast for all continents") + 
+  autolayer(aslm.fin.pred, series = "Asia") + 
+  autolayer(aflm.fin.pred, series = "Africa") +
+  autolayer(salm.fin.pred, series = "South America") + 
+  autolayer(eulm.fin.pred, series = "Europe") + 
+  autolayer(nalm.fin.pred, series = "North America") + 
+  xlim(2013, 2038)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 
 ```
+
+
+```{r}
+autoplot(aulm.fin.pred, ylab = "Temperature", series = "Australia",
+         main = "Middle 25 Years Forecast for all continents") + 
+  autolayer(aslm.fin.pred, series = "Asia") + 
+  autolayer(aflm.fin.pred, series = "Africa") +
+  autolayer(salm.fin.pred, series = "South America") + 
+  autolayer(eulm.fin.pred, series = "Europe") + 
+  autolayer(nalm.fin.pred, series = "North America") + 
+  xlim(2038, 2063)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
+```{r}
+autoplot(aulm.fin.pred, ylab = "Temperature", series = "Australia",
+         main = "Last 25 Years Forecast for all continents") + 
+  autolayer(aslm.fin.pred, series = "Asia") + 
+  autolayer(aflm.fin.pred, series = "Africa") +
+  autolayer(salm.fin.pred, series = "South America") + 
+  autolayer(eulm.fin.pred, series = "Europe") + 
+  autolayer(nalm.fin.pred, series = "North America") + 
+  xlim(2063, 2088)+
+  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(colour = 'gray'),
+        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
+```
+
+
