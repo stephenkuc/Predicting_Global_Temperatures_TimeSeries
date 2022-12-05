@@ -1,6 +1,6 @@
 ---
-title: "ADS 506 Final"
-author: "Lane Whitmore"
+title: "Appendix"
+author: "Stephen Kuc, Luis Perez, Lane Whitmore"
 date: "`r Sys.Date()`"
 output: pdf_document
 ---
@@ -131,6 +131,9 @@ na.stl <- stl(na.train.ts, s.window = 'periodic')
 plot(na.stl)
 ```
 
+
+Looking at the decomposition plot with the original timeplot, it is clear that the time series has an upward trend in addition to strong seasonality. Depending upon which models are used, the seasonality within the data may have to be removed by differencing. 
+
 ### South America
 
 
@@ -160,6 +163,8 @@ plot(sa.stl)
 ```
 
 
+Similar to North America, there is clear seasonality and positive trend across this time series. The data does waver across the distribution a slight bit more in South America. 
+
 ### Africa
 
 
@@ -186,6 +191,9 @@ title('Autocorrelation of AF TS')
 af.stl <- stl(af.train.ts, s.window = 'periodic')
 plot(af.stl)
 ```
+
+Again, the time series has an upward trend, it looks more likely to be additive than multiplicative as the trendline is not increasing substantially over a large period of time. The data is also, once again seasonal.
+
 
 
 ### Europe
@@ -215,7 +223,7 @@ eu.stl <- stl(eu.train.ts, s.window = 'periodic')
 plot(eu.stl)
 ```
 
-
+Again, the trend looks to be on an upward movement while moving even less so than previous continents. The seasonality is still present. 
 
 ### Asia
 
@@ -244,7 +252,7 @@ as.stl <- stl(as.train.ts, s.window = 'periodic')
 plot(as.stl)
 ```
 
-
+The trend line for Asia is a little steeper than other continents, perhaps suggesting that the temperature is increasing at a faster rate in Asia. 
 
 ### Australia 
 
@@ -600,6 +608,7 @@ aflm.pred.df <- data.frame(Date = val.af.temps$dt,
                            True = af.val.ts)
 ```
 
+The Linear regression model is boasting an adjusted r-squared of 0.95 which is a solid solution for the Africa model. 
 
 #### Neural Network
 
@@ -859,70 +868,11 @@ The Linear regression and Holt-Winters results were nearly identical. While the 
 ### North America
 
 ```{r}
+
 na.fin.ts <- ts(na.temps$AverageTemperature, start = c(1900,1), frequency = 12)
-na.fin.hw <- ets(na.fin.ts, model = "ANA", alpha = 0.2)
-
-na.fin.pred <- forecast(na.fin.hw, h = 12 * 75)
-na.fin.pred
-```
-
-
-```{r}
-autoplot(na.fin.pred, ylab = "Temperature", main = "North America 75 year Forecast")+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-
-
-
-```{r}
-autoplot(na.fin.pred, ylab = "Temperature", main = "North America 25 year Forecast")+
-  xlim(2013,2038)+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-```{r}
-autoplot(na.fin.pred, ylab = "Temperature", main = "North America 50 year Forecast")+
-  xlim(2013,2063)+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-
-```{r}
-autoplot(na.fin.pred, ylab = "Temperature", main = "North America 75 year Forecast")+
-  xlim(2013,2088)+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-# training Linear reg on North America
-
-```{r}
-
 ### NA linear model with seasonality and trend 
 na.lm.fin <- tslm(na.fin.ts ~ trend + season)
 nalm.fin.pred <- forecast(na.lm.fin, h = 12*75)
-
-
 
 ```
 
@@ -971,73 +921,18 @@ autoplot(nalm.fin.pred, ylab = "Temperature", main = "North America 75 year Fore
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
+The trend line for North America is not as steep as other Continents. 
 
 
 ### Europe
 
+
 ```{r}
+
 eu.fin.ts <- ts(eu.temps$AverageTemperature, start = c(1900,1), frequency = 12)
-eu.fin.hw <- ets(eu.fin.ts, model = "AAA", alpha = 0.2)
-
-eu.fin.pred <- forecast(eu.fin.hw, h = 12 * 75)
-eu.fin.pred
-```
-
-```{r}
-autoplot(eu.fin.pred, ylab = "Temperature", main = "Europe 75 year Forecast")+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-
-
-```{r}
-autoplot(eu.fin.pred, ylab = "Temperature", main = "Europe 25 year Forecast")+
-  xlim(2013,2038)+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-```{r}
-autoplot(eu.fin.pred, ylab = "Temperature", main = "Europe 50 year Forecast")+
-  xlim(2013,2063)+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-
-```{r}
-autoplot(eu.fin.pred, ylab = "Temperature", main = "Europe 75 year Forecast")+
-  xlim(2013,2088)+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-# training Linear reg on Europe
-
-```{r}
-
 ### EU linear model with seasonality and trend 
 eu.lm.fin <- tslm(eu.fin.ts ~ trend + season)
 eulm.fin.pred <- forecast(eu.lm.fin, h = 12*75)
-
-
 
 ```
 
@@ -1086,73 +981,18 @@ autoplot(eulm.fin.pred, ylab = "Temperature", main = "Europe 75 year Forecast")+
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
+The 75 year forecast points out that Europe as a continent could be reaching their first 20 degree average month within 75 years. 
+
+
 
 ### South America
 
+
 ```{r}
 sa.fin.ts <- ts(sa.temps$AverageTemperature, start = c(1900,1), frequency = 12)
-sa.fin.hw <- ets(sa.fin.ts, model = "ANA", alpha = 0.2)
-
-sa.fin.pred <- forecast(sa.fin.hw, h = 12 * 75)
-sa.fin.pred
-```
-
-
-```{r}
-autoplot(sa.fin.pred, ylab = "Temperature", main = "South America 75 year Forecast")+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-
-
-
-```{r}
-autoplot(sa.fin.pred, ylab = "Temperature", main = "South America 25 year Forecast")+
-  xlim(2013,2038)+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-```{r}
-autoplot(sa.fin.pred, ylab = "Temperature", main = "South America 50 year Forecast")+
-  xlim(2013,2063)+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-
-```{r}
-autoplot(sa.fin.pred, ylab = "Temperature", main = "South America 75 year Forecast")+
-  xlim(2013,2088)+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-# South America Final -- Linear
-
-```{r}
-
 ### SA linear model with seasonality and trend 
 sa.lm.fin <- tslm(sa.fin.ts ~ trend + season)
 salm.fin.pred <- forecast(sa.lm.fin, h = 12*75)
-
-
 
 ```
 
@@ -1200,71 +1040,15 @@ autoplot(salm.fin.pred, ylab = "Temperature", main = "South America 75 year Fore
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
-
+The South America 75 year forecast looks to increase by about 2 degrees with confidence intervals taken into a account. 
 
 ### Africa
 
+
+
 ```{r}
+
 af.fin.ts <- ts(af.temps$AverageTemperature, start = c(1900,1), frequency = 12)
-af.fin.hw <- ets(af.fin.ts, model = "ANA", alpha = 0.2)
-
-af.fin.pred <- forecast(af.fin.hw, h = 12 * 75)
-af.fin.pred
-```
-
-
-
-```{r}
-autoplot(af.fin.pred, ylab = "Temperature", main = "Africa 75 year Forecast")+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-
-
-```{r}
-autoplot(af.fin.pred, ylab = "Temperature", main = "Africa 25 year Forecast")+
-  xlim(2013,2038)+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-```{r}
-autoplot(af.fin.pred, ylab = "Temperature", main = "Africa 50 year Forecast")+
-  xlim(2013,2063)+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-
-```{r}
-autoplot(af.fin.pred, ylab = "Temperature", main = "Africa 75 year Forecast")+
-  xlim(2013,2088)+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-
-# Africa Final -- Linear
-
-```{r}
-
 ### Africa linear model with seasonality and trend 
 af.lm.fin <- tslm(af.fin.ts ~ trend + season)
 aflm.fin.pred <- forecast(af.lm.fin, h = 12*75)
@@ -1318,66 +1102,14 @@ autoplot(aflm.fin.pred, ylab = "Temperature", main = "Africa 75 year Forecast")+
 ```
 
 
+The Africa 75 year forecast is very sharp linear trend. Continents with overall hotter temperatures would be expected to increase more proportionally. 
+
 ### Asia
 
+
 ```{r}
+
 as.fin.ts <- ts(as.temps$AverageTemperature, start = c(1900,1), frequency = 12)
-as.fin.hw <- ets(as.fin.ts, model = "ANA", alpha = 0.2)
-
-as.fin.pred <- forecast(as.fin.hw, h = 12 * 75)
-as.fin.pred
-```
-
-
-```{r}
-autoplot(as.fin.pred, ylab = "Temperature", main = "Asia 75 year Forecast")+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-
-
-```{r}
-autoplot(as.fin.pred, ylab = "Temperature", main = "Asia 25 year Forecast")+
-  xlim(2013,2038)+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-```{r}
-autoplot(as.fin.pred, ylab = "Temperature", main = "Asia 50 year Forecast")+
-  xlim(2013,2063)+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-
-```{r}
-autoplot(as.fin.pred, ylab = "Temperature", main = "Asia 75 year Forecast")+
-  xlim(2013,2088)+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-# Asia Final -- Linear
-
-```{r}
-
 ### Asia linear model with seasonality and trend 
 as.lm.fin <- tslm(as.fin.ts ~ trend + season)
 aslm.fin.pred <- forecast(as.lm.fin, h = 12*75)
@@ -1434,72 +1166,17 @@ autoplot(aslm.fin.pred, ylab = "Temperature", main = "Asia 75 year Forecast")+
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
-
+Asia forecasting shows a sharper 75 year trend line than other continents, which is expected as the original decomposition chart showed the sharpest trend. Additionally, the climate effects may be more centralized here compared to North America or Australia considering that. 
 
 ### Australia
 
+
 ```{r}
+
 au.fin.ts <- ts(au.temps$AverageTemperature, start = c(1900,1), frequency = 12)
-au.fin.hw <- ets(au.fin.ts, model = "ANA", alpha = 0.2)
-
-au.fin.pred <- forecast(au.fin.hw, h = 12 * 75)
-au.fin.pred
-```
-
-
-```{r}
-autoplot(au.fin.pred, ylab = "Temperature", main = "Australia 75 year Forecast")+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-```{r}
-autoplot(au.fin.pred, ylab = "Temperature", main = "Australia 25 year Forecast")+
-  xlim(2013,2038)+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-```{r}
-autoplot(au.fin.pred, ylab = "Temperature", main = "Australia 50 year Forecast")+
-  xlim(2013,2063)+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-
-```{r}
-autoplot(au.fin.pred, ylab = "Temperature", main = "Australia 75 year Forecast")+
-  xlim(2013,2088)+
-  theme(axis.text.x = element_text(vjust = 0.7, size = 8),
-        plot.title = element_text(hjust = 0.5),
-        panel.background = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.ticks.x = element_line(colour = 'gray'),
-        axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
-```
-
-# Australia Final -- Linear
-
-```{r}
-
 ### AU linear model with seasonality and trend 
 au.lm.fin <- tslm(au.fin.ts ~ trend + season)
 aulm.fin.pred <- forecast(au.lm.fin, h = 12*75)
-
-
 
 ```
 
@@ -1549,6 +1226,8 @@ autoplot(aulm.fin.pred, ylab = "Temperature", main = "Australia 75 year Forecast
 ```
 
 
+Looking at the forecasts, there is the linear trend line of the data that does somewhat match what can be seen in the decomposition trend. 
+
 ### Plotting all final forecasts (Linear Regression)
 
 ```{r}
@@ -1570,6 +1249,8 @@ autoplot(aulm.fin.pred, ylab = "Temperature", series = "Australia",
 ```
 
 
+In the Early years, Australia has the hottest peaks of the forecast at nearly 30 degrees celsius. Africa and South America are also quite high. North America has the lowest at -10 degrees celsius within the forecast. 
+
 ```{r}
 autoplot(aulm.fin.pred, ylab = "Temperature", series = "Australia",
          main = "Middle 25 Years Forecast for all continents") + 
@@ -1586,6 +1267,8 @@ autoplot(aulm.fin.pred, ylab = "Temperature", series = "Australia",
         axis.ticks.x = element_line(colour = 'gray'),
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
+
+Looking at the next 25 years of the forecast, it seems that North America winter lows have crept up a tiny bit. Additionally, Australia seems to be climbing over 30 degrees celsius. 
 
 
 ```{r}
@@ -1605,4 +1288,5 @@ autoplot(aulm.fin.pred, ylab = "Temperature", series = "Australia",
         axis.line.x = element_line(colour = 'gray', size=0.5, linetype='solid'))
 ```
 
+Observing the last 25 years of the 75 year forecast, it appears that all continents have shifted upwards as the overall trend of the data the models have been trained on have been an upward shift in surface temperature, that is to be expected. 
 
